@@ -10,7 +10,7 @@ class FruitGame {
 
         this.soundCtrl = window.soundController;
         this.particles = new ParticleSystem();
-        this.blade = new Blade(this.canvas, this.soundCtrl);
+        this.blade = new Blade(this.canvas, this.soundCtrl, this);
 
         // Game Configuration & State
         this.state = 'MENU'; // 'MENU' | 'PLAYING' | 'PAUSED' | 'GAMEOVER'

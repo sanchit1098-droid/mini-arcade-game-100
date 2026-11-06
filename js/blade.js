@@ -5,9 +5,10 @@
  */
 
 class Blade {
-    constructor(canvas, soundCtrl) {
+    constructor(canvas, soundCtrl, game = null) {
         this.canvas = canvas;
         this.soundCtrl = soundCtrl;
+        this.game = game;
 
         this.points = []; // [{x, y, time}]
         this.isSwiping = false;
@@ -31,8 +32,8 @@ class Blade {
         // Pointer / Touch / Mouse handlers
         const getCanvasCoords = (e) => {
             const rect = this.canvas.getBoundingClientRect();
-            let clientX = e.clientX;
-            let clientY = e.clientY;
+            let clientX = 0;
+            let clientY = 0;
 
             if (e.touches && e.touches.length > 0) {
                 clientX = e.touches[0].clientX;
@@ -40,11 +41,19 @@ class Blade {
             } else if (e.changedTouches && e.changedTouches.length > 0) {
                 clientX = e.changedTouches[0].clientX;
                 clientY = e.changedTouches[0].clientY;
+            } else if (typeof e.clientX === 'number') {
+                clientX = e.clientX;
+                clientY = e.clientY;
             }
 
-            // Map client coords to internal canvas coordinates
-            const scaleX = this.canvas.width / rect.width;
-            const scaleY = this.canvas.height / rect.height;
+            // Map client coords to logical canvas coordinates (CSS pixels)
+            // Note: The 2D context is already scaled by dpr via ctx.scale(dpr, dpr) in game.js.
+            // Slicing math and visual rendering operate in logical coordinates (matching CSS pixels).
+            const logicalWidth = (this.game && this.game.width) || rect.width || this.canvas.clientWidth;
+            const logicalHeight = (this.game && this.game.height) || rect.height || this.canvas.clientHeight;
+
+            const scaleX = rect.width ? (logicalWidth / rect.width) : 1;
+            const scaleY = rect.height ? (logicalHeight / rect.height) : 1;
 
             return {
                 x: (clientX - rect.left) * scaleX,

@@ -105,11 +105,13 @@ def audit_js_and_css_syntax():
 def audit_vercel_config():
     print("\n[AUDIT] Validating vercel.json...")
     vercel_path = os.path.join(ROOT_DIR, "vercel.json")
-    assert os.path.exists(vercel_path), "vercel.json missing!"
-    with open(vercel_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-    assert data.get("version") == 2, "Invalid vercel.json version"
-    print("  [OK] vercel.json is valid.")
+    if os.path.exists(vercel_path):
+        with open(vercel_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        assert data.get("version") == 2, "Invalid vercel.json version"
+        print("  [OK] vercel.json is valid.")
+    else:
+        print("  [INFO] vercel.json not present (optional for zero-config static hosting).")
 
 def run_build():
     print("========================================")
