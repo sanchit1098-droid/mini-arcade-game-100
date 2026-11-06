@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#050811"/>
+    </linearGradient>
+    <filter id="cglow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="380" fill="url(#cbg)"/>
+
+  <!-- Neon Bricks Grid -->
+  <!-- Row 1: Red -->
+  <rect x="70" y="80" width="85" height="24" rx="4" fill="#ff3838" filter="url(#cglow)"/>
+  <rect x="165" y="80" width="85" height="24" rx="4" fill="#ff3838" filter="url(#cglow)"/>
+  <rect x="260" y="80" width="85" height="24" rx="4" fill="#ff3838" opacity="0.3"/>
+  <rect x="355" y="80" width="85" height="24" rx="4" fill="#ff3838" filter="url(#cglow)"/>
+  <rect x="450" y="80" width="85" height="24" rx="4" fill="#ff3838" filter="url(#cglow)"/>
+
+  <!-- Row 2: Orange/Amber -->
+  <rect x="70" y="112" width="85" height="24" rx="4" fill="#ff9f1a" filter="url(#cglow)"/>
+  <rect x="165" y="112" width="85" height="24" rx="4" fill="#ff9f1a" filter="url(#cglow)"/>
+  <rect x="260" y="112" width="85" height="24" rx="4" fill="#ff9f1a" filter="url(#cglow)"/>
+  <rect x="355" y="112" width="85" height="24" rx="4" fill="#ff9f1a" filter="url(#cglow)"/>
+  <rect x="450" y="112" width="85" height="24" rx="4" fill="#ff9f1a" filter="url(#cglow)"/>
+
+  <!-- Row 3: Yellow/Emerald -->
+  <rect x="70" y="144" width="85" height="24" rx="4" fill="#2ecc71" filter="url(#cglow)"/>
+  <rect x="165" y="144" width="85" height="24" rx="4" fill="#2ecc71" filter="url(#cglow)"/>
+  <rect x="260" y="144" width="85" height="24" rx="4" fill="#2ecc71" filter="url(#cglow)"/>
+  <rect x="355" y="144" width="85" height="24" rx="4" fill="#2ecc71" filter="url(#cglow)"/>
+  <rect x="450" y="144" width="85" height="24" rx="4" fill="#2ecc71" filter="url(#cglow)"/>
+
+  <!-- Ball Trail -->
+  <circle cx="280" cy="245" r="5" fill="#00f2fe" opacity="0.25"/>
+  <circle cx="288" cy="225" r="7" fill="#00f2fe" opacity="0.5"/>
+  <circle cx="295" cy="205" r="9" fill="#00f2fe" opacity="0.75"/>
+
+  <!-- Energy Ball -->
+  <circle cx="302" cy="185" r="12" fill="#ffffff" filter="url(#cglow)"/>
+  <circle cx="302" cy="185" r="8" fill="#00f2fe"/>
+
+  <!-- Impact Sparkles -->
+  <circle cx="260" cy="92" r="3" fill="#ffea00" filter="url(#cglow)"/>
+  <circle cx="270" cy="80" r="4" fill="#ff3838" filter="url(#cglow)"/>
+  <circle cx="250" cy="105" r="3" fill="#ff9f1a" filter="url(#cglow)"/>
+  <circle cx="285" cy="98" r="4" fill="#ffffff" filter="url(#cglow)"/>
+
+  <!-- Cyber Paddle -->
+  <rect x="220" y="315" width="160" height="18" rx="8" fill="#00f2fe" filter="url(#cglow)"/>
+  <rect x="250" y="320" width="100" height="6" rx="3" fill="#ffffff"/>
+
+  <!-- Tags -->
+  <rect x="25" y="25" width="80" height="26" rx="6" fill="rgba(255, 0, 127, 0.2)" stroke="#ff007f" stroke-width="1"/>
+  <text x="65" y="42" fill="#ff007f" font-family="'Montserrat', sans-serif" font-size="11" font-weight="800" text-anchor="middle">RETRO</text>
+
+  <rect x="112" y="25" width="90" height="26" rx="6" fill="rgba(0, 242, 254, 0.15)" stroke="#00f2fe" stroke-width="1"/>
+  <text x="157" y="42" fill="#00f2fe" font-family="'Montserrat', sans-serif" font-size="11" font-weight="800" text-anchor="middle">CASUAL</text>
+</svg>

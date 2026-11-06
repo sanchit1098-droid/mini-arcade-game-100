@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0e17">
+    <meta name="description" content="Contact Mini Game Arcade - Send feedback, report bugs, or submit new game ideas to our developer team.">
+    <title>Contact | Mini Game Arcade</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-link" aria-label="Mini Game Arcade Home">
+                <img src="assets/logo.svg" alt="Mini Game Arcade Emblem" class="brand-logo" width="38" height="38">
+                <span class="brand-text">MINI GAME ARCADE</span>
+            </a>
+
+            <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav role="navigation" aria-label="Main Navigation">
+                <ul id="navMenu" class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Games</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link active">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="mainContent" class="container page-container" role="main">
+        <h1 class="page-title">Contact Us</h1>
+        <p class="page-subtitle">Have a game idea, bug report, or feedback? We would love to hear from you.</p>
+
+        <section class="content-block">
+            <h2>Send Us a Message</h2>
+            <p>Fill out the form below and we will get back to you as soon as possible.</p>
+
+            <form id="contactForm" class="contact-form" novalidate>
+                <div class="form-group">
+                    <label for="contactName" class="form-label">Your Name</label>
+                    <input type="text" id="contactName" name="name" class="form-input" placeholder="e.g. Alex Player" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail" class="form-label">Your Email</label>
+                    <input type="email" id="contactEmail" name="email" class="form-input" placeholder="alex@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactSubject" class="form-label">Topic</label>
+                    <select id="contactSubject" name="subject" class="form-input" style="cursor:pointer;">
+                        <option value="feedback">General Feedback</option>
+                        <option value="bug">Bug Report / Performance Issue</option>
+                        <option value="game-idea">New Game Suggestion</option>
+                        <option value="other">Other Inquiry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMessage" class="form-label">Message</label>
+                    <textarea id="contactMessage" name="message" class="form-textarea" placeholder="Describe your question, suggestion, or bug in detail..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <span>SEND MESSAGE</span>
+                    <span>✉️</span>
+                </button>
+
+                <div id="formStatusMsg" class="form-status"></div>
+            </form>
+        </section>
+
+        <section class="content-block">
+            <h2>Frequently Asked Questions</h2>
+            <h3>Are all games on this site free to play?</h3>
+            <p>Yes, 100%. All games are free, open to play directly in your browser, and do not require payments or micro-transactions.</p>
+
+            <h3>How can I submit my own indie game to be featured?</h3>
+            <p>If you have an original HTML5 canvas mini-game that meets our performance and privacy guidelines, send us a link via the form above!</p>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <strong style="color:#fff; font-family:var(--font-heading);">MINI GAME ARCADE</strong>
+                    <p style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Original browser mini-games crafted with HTML5 Canvas.</p>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="about.html" class="footer-link">About</a></li>
+                    <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Mini Game Arcade. All games are original works and run 100% locally in your browser.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/portal.js"></script>
+    <script>
+        // Client-side contact form handler
+        const form = document.getElementById('contactForm');
+        const statusMsg = document.getElementById('formStatusMsg');
+        if (form && statusMsg) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('contactName').value.trim();
+                const email = document.getElementById('contactEmail').value.trim();
+                const msg = document.getElementById('contactMessage').value.trim();
+
+                if (!name || !email || !msg) {
+                    statusMsg.className = 'form-status';
+                    statusMsg.style.display = 'block';
+                    statusMsg.style.background = 'rgba(255, 56, 56, 0.15)';
+                    statusMsg.style.border = '1px solid #ff3838';
+                    statusMsg.style.color = '#ff3838';
+                    statusMsg.textContent = 'Please fill out all required fields before sending.';
+                    return;
+                }
+
+                // Friendly instant feedback
+                statusMsg.className = 'form-status success';
+                statusMsg.textContent = `Thank you, ${name}! Your message has been received. We will get back to you soon.`;
+                form.reset();
+            });
+        }
+    </script>
+</body>
+</html>

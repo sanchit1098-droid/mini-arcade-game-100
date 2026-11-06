@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#070a13">
+    <meta name="description" content="Play Chroma Breaker on Mini Game Arcade. Cyber neon brick breaker action with smooth paddle physics and responsive controls.">
+    <title>Chroma Breaker | Mini Game Arcade</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="breakerContainer">
+        <!-- Floating Navigation -->
+        <div class="arcade-nav-bar">
+            <a href="../../index.html" class="btn-back-arcade" title="Back to Mini Game Arcade Home">
+                <span>◀</span>
+                <span>Arcade</span>
+            </a>
+        </div>
+
+        <!-- In-game HUD -->
+        <div class="hud">
+            <div class="hud-pill">SCORE: <strong id="hudScoreBreaker">0</strong></div>
+            <div class="hud-pill" id="hudLivesBreaker">❤️❤️❤️</div>
+            <button id="btnPauseBreaker" class="icon-btn" title="Pause Game (P / Esc)">⏸</button>
+            <button id="btnSoundToggleBreaker" class="icon-btn" title="Toggle Sound">🔊</button>
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="breakerCanvas"></canvas>
+
+        <div id="launchHint" class="launch-hint">TAP SCREEN OR PRESS SPACE TO LAUNCH BALL</div>
+
+        <!-- Start Menu Overlay -->
+        <div id="screenMenuBreaker" class="overlay-screen">
+            <div class="modal-card">
+                <h1 class="game-title">CHROMA BREAKER</h1>
+                <p class="tagline">Shatter the cyber bricks. Master the angle. Defend the core.</p>
+
+                <div style="background: rgba(8,12,22,0.6); padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 0.8rem; color: #94a3b8; text-align: left;">
+                    <p style="margin-bottom:6px;">🖱️ <strong>Mouse / Touch:</strong> Move paddle</p>
+                    <p style="margin-bottom:6px;">⌨️ <strong>Arrow Keys / A, D:</strong> Steer paddle</p>
+                    <p>🚀 <strong>Space / Tap:</strong> Launch ball</p>
+                </div>
+
+                <button id="btnStartBreaker" class="btn btn-primary">LAUNCH GAME 🚀</button>
+                <a href="../../index.html" class="btn btn-secondary">BACK TO ARCADE</a>
+            </div>
+        </div>
+
+        <!-- Pause Overlay -->
+        <div id="screenPauseBreaker" class="overlay-screen hidden">
+            <div class="modal-card">
+                <h2 style="font-family: var(--font-heading); margin-bottom: 20px;">GAME PAUSED</h2>
+                <button id="btnResumeBreaker" class="btn btn-primary">▶️ RESUME</button>
+                <button id="btnRestartBreaker" class="btn btn-secondary">🔄 RESTART</button>
+                <a href="../../index.html" class="btn btn-secondary">🏠 ARCADE HOME</a>
+            </div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="screenGameOverBreaker" class="overlay-screen hidden">
+            <div class="modal-card">
+                <h2 id="gameOverTitleBreaker" style="font-family: var(--font-heading); margin-bottom: 14px;">GAME OVER</h2>
+                <p style="color: #94a3b8; margin-bottom: 6px;">FINAL SCORE</p>
+                <div id="goScoreBreaker" style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: #00f2fe; margin-bottom: 14px;">0</div>
+
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px;">BEST RECORD: <strong id="goBestBreaker" style="color: #ffea00;">0</strong></p>
+
+                <button id="btnPlayAgainBreaker" class="btn btn-primary">PLAY AGAIN 🔄</button>
+                <a href="../../index.html" class="btn btn-secondary">🏠 ARCADE HOME</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/breaker.js"></script>
+</body>
+</html>

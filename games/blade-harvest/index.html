@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0d1117">
+    <meta name="description" content="Play Blade Harvest on Mini Game Arcade. Slash flying fruits, dodge bombs, and rack up combo multipliers in this responsive browser arcade game.">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Blade Harvest | Mini Game Arcade</title>
+
+    <!-- Google Fonts with local fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Game Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Top Navigation Bar back to Arcade */
+        .arcade-nav-bar {
+            position: absolute;
+            top: env(safe-area-inset-top, 10px);
+            left: max(16px, env(safe-area-inset-left, 16px));
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: auto;
+        }
+        .btn-back-arcade {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: var(--font-heading);
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-decoration: none;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+        }
+        .btn-back-arcade:hover {
+            border-color: #00f2fe;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.35);
+            color: #00f2fe;
+        }
+        .btn-fullscreen {
+            padding: 8px 12px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+            transition: all 0.2s ease;
+        }
+        .btn-fullscreen:hover {
+            border-color: #00f2fe;
+            color: #00f2fe;
+        }
+        @media (max-width: 480px) {
+            .btn-back-arcade span.back-text {
+                display: none;
+            }
+            .btn-back-arcade {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Floating Arcade Back & Fullscreen Bar -->
+        <div class="arcade-nav-bar">
+            <a href="../../index.html" class="btn-back-arcade" title="Back to Mini Game Arcade Home">
+                <span>◀</span>
+                <span class="back-text">Arcade</span>
+            </a>
+            <button id="btnToggleFullscreen" class="btn-fullscreen" title="Toggle Fullscreen" aria-label="Toggle Fullscreen">⛶</button>
+        </div>
+
+        <!-- Canvas Layer -->
+        <canvas id="gameCanvas"></canvas>
+
+        <!-- Top HUD (Visible during gameplay) -->
+        <header id="gameHUD" class="hud hidden">
+            <!-- Left: Current Score -->
+            <div class="hud-box hud-score">
+                <span class="hud-label">SCORE</span>
+                <span id="hudScoreVal" class="hud-val">0</span>
+            </div>
+
+            <!-- Center: Timer (Arcade) or Lives (Classic) -->
+            <div class="hud-center">
+                <div id="hudTimerBox" class="hud-box hud-timer">
+                    <span class="hud-label">TIME</span>
+                    <span id="hudTimerVal" class="hud-val">60s</span>
+                </div>
+                <div id="hudLivesBox" class="hud-box hud-lives hidden">
+                    <span class="hud-label">LIVES</span>
+                    <div id="hudLivesVal" class="lives-container">
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                        <span class="heart">❤️</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Quick Controls -->
+            <div class="hud-controls">
+                <button id="btnPause" class="icon-btn" title="Pause Game (P / Esc)" aria-label="Pause">⏸</button>
+                <button id="btnSoundToggle" class="icon-btn" title="Toggle Sound (M)" aria-label="Toggle Sound">🔊</button>
+            </div>
+        </header>
+
+        <!-- Main Menu Overlay -->
+        <div id="screenMenu" class="overlay-screen">
+            <div class="menu-card glass-panel">
+                <div class="brand-badge">MINI GAME ARCADE</div>
+                <h1 class="game-title">
+                    <span class="title-top">BLADE</span>
+                    <span class="title-bottom">HARVEST</span>
+                </h1>
+                <p class="tagline">Slice the harvest. Dodge the bombs. Unleash combos.</p>
+
+                <!-- Game Mode Selector -->
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="arcade">
+                        <span class="mode-name">⚡ ARCADE</span>
+                        <span class="mode-desc">60s Blitz & Combos</span>
+                    </button>
+                    <button class="mode-btn" data-mode="classic">
+                        <span class="mode-name">🎯 CLASSIC</span>
+                        <span class="mode-desc">3 Lives & Sudden Death</span>
+                    </button>
+                </div>
+
+                <!-- High Score Banner -->
+                <div class="best-score-banner">
+                    <span>RECORD:</span>
+                    <strong id="menuHighScoreVal">0</strong>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="menu-actions">
+                    <button id="btnStartGame" class="btn btn-primary pulse-btn">
+                        <span class="btn-text">START SLICING</span>
+                        <span class="btn-icon">⚔️</span>
+                    </button>
+                    <div class="sub-actions">
+                        <button id="btnHelp" class="btn btn-secondary">
+                            <span>❓ How to Play</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pause Overlay -->
+        <div id="screenPause" class="overlay-screen hidden">
+            <div class="modal-card glass-panel">
+                <h2 class="modal-title">GAME PAUSED</h2>
+                <div class="modal-actions">
+                    <button id="btnResume" class="btn btn-primary">
+                        <span>▶️ RESUME</span>
+                    </button>
+                    <button id="btnRestartPause" class="btn btn-secondary">
+                        <span>🔄 RESTART</span>
+                    </button>
+                    <a href="../../index.html" class="btn btn-secondary" style="text-decoration:none;">
+                        <span>🏠 ARCADE HOME</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="screenGameOver" class="overlay-screen hidden">
+            <div class="modal-card glass-panel">
+                <div id="newRecordBadge" class="badge-record hidden">🏆 NEW RECORD!</div>
+                <h2 id="gameOverTitle" class="modal-title">GAME OVER</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">FINAL SCORE</span>
+                        <span id="goScoreVal" class="stat-val highlight">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">BEST RECORD</span>
+                        <span id="goBestVal" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">FRUITS SLICED</span>
+                        <span id="goSlicedVal" class="stat-val">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">MAX COMBO</span>
+                        <span id="goComboVal" class="stat-val highlight-combo">0</span>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="btnPlayAgain" class="btn btn-primary pulse-btn">
+                        <span>⚔️ PLAY AGAIN</span>
+                    </button>
+                    <button id="btnBackToMenu" class="btn btn-secondary">
+                        <span>🔄 GAME MENU</span>
+                    </button>
+                    <a href="../../index.html" class="btn btn-secondary" style="text-decoration:none;">
+                        <span>🏠 ARCADE HOME</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Play / Tutorial Modal -->
+        <div id="helpModal" class="overlay-screen hidden modal-backdrop">
+            <div class="modal-card help-card glass-panel">
+                <h2 class="modal-title">HOW TO PLAY</h2>
+                <div class="rules-list">
+                    <div class="rule-row">
+                        <div class="rule-icon">🍉</div>
+                        <div class="rule-info">
+                            <strong>Slice Fruit</strong>
+                            <p>Swipe your finger or drag the mouse through flying fruits to slice them.</p>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-icon">⚡</div>
+                        <div class="rule-info">
+                            <strong>Combo Bonuses</strong>
+                            <p>Slice 3 or more fruits in a single stroke for massive multiplier bonuses (+30, +50, +100pts)!</p>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-icon">💣</div>
+                        <div class="rule-info">
+                            <strong>Avoid Bombs!</strong>
+                            <p>Arcade: costs <strong>-100 pts & -10 sec</strong>.<br>Classic: <strong>Instant Game Over!</strong></p>
+                        </div>
+                    </div>
+                    <div class="rule-row">
+                        <div class="rule-icon">🎯</div>
+                        <div class="rule-info">
+                            <strong>Game Modes</strong>
+                            <p><strong>Arcade:</strong> Beat the 60s clock.<br><strong>Classic:</strong> 3 Lives. Dropping fruits uncut loses a life!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btnCloseHelp" class="btn btn-primary">
+                    <span>READY TO SLICE! 🍉</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/audio.js"></script>
+    <script src="js/fruits.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/blade.js"></script>
+    <script src="js/game.js"></script>
+    <script>
+        // Fullscreen toggle
+        const fsBtn = document.getElementById('btnToggleFullscreen');
+        if (fsBtn) {
+            fsBtn.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen?.().catch(() => {});
+                    fsBtn.textContent = '✖';
+                } else {
+                    document.exitFullscreen?.().catch(() => {});
+                    fsBtn.textContent = '⛶';
+                }
+            });
+            document.addEventListener('fullscreenchange', () => {
+                fsBtn.textContent = document.fullscreenElement ? '✖' : '⛶';
+            });
+        }
+    </script>
+</body>
+</html>

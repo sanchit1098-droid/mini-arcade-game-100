@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#9d4edd"/>
+    </linearGradient>
+  </defs>
+  <!-- Gamepad body -->
+  <rect x="4" y="11" width="40" height="26" rx="9" fill="url(#logoGrad)"/>
+  <!-- Screen/inner recessed area -->
+  <rect x="7" y="14" width="34" height="20" rx="6" fill="#0d1117"/>
+  <!-- D-Pad Left -->
+  <rect x="13" y="19" width="4" height="10" rx="1.5" fill="#00f2fe"/>
+  <rect x="10" y="22" width="10" height="4" rx="1.5" fill="#00f2fe"/>
+  <!-- Action Buttons Right -->
+  <circle cx="34" cy="21" r="2.2" fill="#ff007f"/>
+  <circle cx="31" cy="27" r="2.2" fill="#ffea00"/>
+  <circle cx="37" cy="27" r="2.2" fill="#2ecc71"/>
+</svg>

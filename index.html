@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0e17">
+    <meta name="description" content="Mini Game Arcade - Fast, responsive, browser-based indie arcade games. Play Blade Harvest, Chroma Breaker, and more instantly on phone, tablet, or desktop with zero downloads.">
+    <title>Mini Game Arcade | Instant Browser Games</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+    <!-- Accessibility Skip Link -->
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+    <!-- Top Navigation Header -->
+    <header class="site-header" role="banner">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-link" aria-label="Mini Game Arcade Home">
+                <img src="assets/logo.svg" alt="Mini Game Arcade Emblem" class="brand-logo" width="38" height="38">
+                <span class="brand-text">MINI GAME ARCADE</span>
+            </a>
+
+            <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav role="navigation" aria-label="Main Navigation">
+                <ul id="navMenu" class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Games</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent" role="main">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-badge">⚡ ZERO DOWNLOADS • INSTANT PLAY</div>
+                <h1 class="hero-title">
+                    High-Octane <span class="gradient-text">Arcade Games</span><br>
+                    Direct In Your Browser
+                </h1>
+                <p class="hero-desc">
+                    Mini Game Arcade brings crisp physics, vibrant particle effects, and responsive controls to your browser. Built entirely with open web standards—ready for phone, tablet, and desktop.
+                </p>
+
+                <div class="hero-badges-row">
+                    <span class="pill-feature">📱 Touch & Swipe Ready</span>
+                    <span class="pill-feature">🔒 Privacy First • No Trackers</span>
+                    <span class="pill-feature">⚡ 60 FPS HTML5 Canvas</span>
+                    <span class="pill-feature">🎧 Procedural Web Audio</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filter Controls -->
+        <section class="filter-section" aria-label="Game Filters">
+            <div class="container">
+                <div class="filter-bar">
+                    <div class="search-box">
+                        <span class="search-icon" aria-hidden="true">🔍</span>
+                        <input type="search" id="searchGames" class="search-input" placeholder="Search games by title, genre, or controls (e.g. fruit, swipe, retro)..." aria-label="Search games">
+                        <button id="clearSearch" class="search-clear-btn" aria-label="Clear search input">✕</button>
+                    </div>
+
+                    <div class="categories-row" role="group" aria-label="Filter by Category">
+                        <button class="category-pill active" data-category="All">All Games</button>
+                        <button class="category-pill" data-category="Action">Action</button>
+                        <button class="category-pill" data-category="Retro">Retro</button>
+                        <button class="category-pill" data-category="Arcade">Arcade</button>
+                        <button class="category-pill" data-category="Casual">Casual</button>
+                        <span id="resultsCount" class="results-count">Showing 2 of 2 games</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Games Grid -->
+        <section class="games-section" aria-label="Playable Games">
+            <div class="container">
+                <div id="gamesGrid" class="games-grid">
+                    <!-- Populated dynamically by portal.js, with static fallback for SEO and no-JS -->
+                    <article class="game-card" id="game-blade-harvest">
+                        <div class="card-thumb-wrap">
+                            <img src="assets/blade-harvest-thumb.svg" alt="Blade Harvest Game Thumbnail" class="card-thumb" width="600" height="380" loading="lazy">
+                            <span class="card-badge-featured">⭐ FEATURED</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-tags">
+                                <span class="tag-badge">ACTION</span>
+                                <span class="tag-badge">TOUCH FRIENDLY</span>
+                            </div>
+                            <h2 class="card-title">Blade Harvest</h2>
+                            <div class="card-subtitle">Fruit Slicer Arcade</div>
+                            <p class="card-desc">Slice juicy fruits across the screen, dodge dangerous bombs, and chain massive combo multipliers in this fast-paced arcade game.</p>
+                            <div class="card-controls" title="Supported Controls">
+                                <span>🖱️ Click & Drag</span>
+                                <span>📱 Swipe finger</span>
+                            </div>
+                            <a href="games/blade-harvest/index.html" class="btn-play-game" aria-label="Play Blade Harvest now">
+                                <span>PLAY NOW</span>
+                                <span>⚔️</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <article class="game-card" id="game-chroma-breaker">
+                        <div class="card-thumb-wrap">
+                            <img src="assets/chroma-breaker-thumb.svg" alt="Chroma Breaker Game Thumbnail" class="card-thumb" width="600" height="380" loading="lazy">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-tags">
+                                <span class="tag-badge">RETRO</span>
+                                <span class="tag-badge">TOUCH FRIENDLY</span>
+                            </div>
+                            <h2 class="card-title">Chroma Breaker</h2>
+                            <div class="card-subtitle">Cyber Brick Arcade</div>
+                            <p class="card-desc">Shatter vibrant neon bricks with an energy pulse ball. Control paddle spin, angle your rebounds, and clear the grid without losing a life.</p>
+                            <div class="card-controls" title="Supported Controls">
+                                <span>🖱️ Move cursor</span>
+                                <span>📱 Drag paddle</span>
+                            </div>
+                            <a href="games/chroma-breaker/index.html" class="btn-play-game" aria-label="Play Chroma Breaker now">
+                                <span>PLAY NOW</span>
+                                <span>🚀</span>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Mini Game Arcade Section -->
+        <section class="why-section">
+            <div class="container">
+                <h2 class="section-title">Built For Instant, Pure Gameplay</h2>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-heading">No Downloads or Sign-ups</h3>
+                        <p class="feature-desc">Every game loads in under a second. Jump straight into the action on any modern web browser without installing anything.</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">📱</div>
+                        <h3 class="feature-heading">Touch & Mobile Optimized</h3>
+                        <p class="feature-desc">Controls are tuned specifically for touchscreen gestures, preventing accidental page scrolls while swiping aggressively.</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">🛡️</div>
+                        <h3 class="feature-heading">Clean & Safe</h3>
+                        <p class="feature-desc">Zero intrusive popups, zero deceptive download buttons, and zero trackers. Just authentic indie arcade entertainment.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <strong style="color:#fff; font-family:var(--font-heading);">MINI GAME ARCADE</strong>
+                    <p style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Original browser mini-games crafted with HTML5 Canvas.</p>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="about.html" class="footer-link">About</a></li>
+                    <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Mini Game Arcade. All games are original works and run 100% locally in your browser.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Portal Scripts -->
+    <script src="js/portal.js"></script>
+</body>
+</html>

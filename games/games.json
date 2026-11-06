@@ -1,0 +1,46 @@
+[
+  {
+    "id": "blade-harvest",
+    "title": "Blade Harvest",
+    "subtitle": "Fruit Slicer Arcade",
+    "category": "Action",
+    "tags": ["Action", "Arcade", "Casual", "Touch-Friendly"],
+    "description": "Slice juicy fruits across the screen, dodge dangerous bombs, and chain massive combo multipliers in this fast-paced arcade game.",
+    "thumbnail": "assets/blade-harvest-thumb.svg",
+    "route": "games/blade-harvest/index.html",
+    "controls": {
+      "mouse": "Click & Drag across fruits to slice",
+      "touch": "Swipe finger across flying fruits",
+      "keyboard": "P / Esc to Pause, M to Mute, Space to Launch"
+    },
+    "features": [
+      "Procedural fruit graphics & juice particle physics",
+      "Arcade 60s Blitz & Classic 3-Lives Modes",
+      "Web Audio procedural sound effects"
+    ],
+    "featured": true,
+    "releaseDate": "2026-10"
+  },
+  {
+    "id": "chroma-breaker",
+    "title": "Chroma Breaker",
+    "subtitle": "Cyber Brick Arcade",
+    "category": "Retro",
+    "tags": ["Retro", "Arcade", "Casual", "Touch-Friendly"],
+    "description": "Shatter vibrant neon bricks with an energy pulse ball. Control paddle spin, angle your rebounds, and clear the grid without losing a life.",
+    "thumbnail": "assets/chroma-breaker-thumb.svg",
+    "route": "games/chroma-breaker/index.html",
+    "controls": {
+      "mouse": "Move cursor to guide paddle",
+      "touch": "Drag finger horizontally across screen",
+      "keyboard": "Left / Right Arrow (or A / D) to steer, Space to launch"
+    },
+    "features": [
+      "Dynamic spin paddle physics & glowing ball trail",
+      "Multi-tier color bricks with point rewards",
+      "Synthesized retro chimes & spark particles"
+    ],
+    "featured": false,
+    "releaseDate": "2026-10"
+  }
+]

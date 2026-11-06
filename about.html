@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0e17">
+    <meta name="description" content="About Mini Game Arcade - Learn about our mission to bring fast, accessible, lightweight indie arcade games directly to your browser.">
+    <title>About | Mini Game Arcade</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/portal.css">
+</head>
+<body>
+    <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+        <div class="container nav-container">
+            <a href="index.html" class="brand-link" aria-label="Mini Game Arcade Home">
+                <img src="assets/logo.svg" alt="Mini Game Arcade Emblem" class="brand-logo" width="38" height="38">
+                <span class="brand-text">MINI GAME ARCADE</span>
+            </a>
+
+            <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                ☰
+            </button>
+
+            <nav role="navigation" aria-label="Main Navigation">
+                <ul id="navMenu" class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Games</a></li>
+                    <li><a href="about.html" class="nav-link active">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="mainContent" class="container page-container" role="main">
+        <h1 class="page-title">About Mini Game Arcade</h1>
+        <p class="page-subtitle">Pure gameplay, instant loading, and zero barriers.</p>
+
+        <section class="content-block">
+            <h2>Our Mission</h2>
+            <p>
+                <strong>Mini Game Arcade</strong> was built with a simple philosophy: web games should be instant, responsive, and fun. No 500MB downloads, no mandatory app store installations, no forced account signups, and no intrusive paywalls.
+            </p>
+            <p>
+                Whether you have 2 minutes between meetings on your laptop or want a quick touch-friendly challenge on your smartphone, our arcade delivers silky 60 FPS gameplay immediately upon clicking <em>Play</em>.
+            </p>
+        </section>
+
+        <section class="content-block">
+            <h2>Under the Hood: Open Web Standards</h2>
+            <p>Every game on this platform is engineered natively with vanilla web technologies:</p>
+            <ul>
+                <li><strong>HTML5 Canvas 2D:</strong> Hardware-accelerated graphics rendering with dynamic particle effects, fluid trajectories, and screen shake.</li>
+                <li><strong>Web Audio API:</strong> Real-time audio synthesis generating dynamic blade swooshes, brick chimes, and explosion rumbles without downloading heavy audio files.</li>
+                <li><strong>Touch Gesture Optimization:</strong> Strict gesture boundaries (<code>touch-action: none</code>) prevent accidental pull-to-refresh or page bouncing during intense swiping.</li>
+                <li><strong>Zero-Dependency Static Architecture:</strong> The entire site runs as static files deployable on any global edge network like Vercel with lightning-fast load times.</li>
+            </ul>
+        </section>
+
+        <section class="content-block">
+            <h2>Our Quality Standards</h2>
+            <ul>
+                <li><strong>Only 100% Playable Games:</strong> We never display fake "coming soon" placeholders that lead to dead ends. If a game appears in our catalog, it is completely playable.</li>
+                <li><strong>Original Artwork:</strong> All vector shapes, animations, and sound synthesizers are original works created specifically for this arcade.</li>
+                <li><strong>Privacy First:</strong> Your high scores stay on your device in local storage. We do not track personal data, sell telemetry, or require cookies to play.</li>
+            </ul>
+        </section>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="index.html" class="btn-play-game" style="display:inline-flex; width:auto;">
+                <span>EXPLORE ALL GAMES</span>
+                <span>🎮</span>
+            </a>
+        </div>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <strong style="color:#fff; font-family:var(--font-heading);">MINI GAME ARCADE</strong>
+                    <p style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Original browser mini-games crafted with HTML5 Canvas.</p>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="about.html" class="footer-link">About</a></li>
+                    <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="terms.html" class="footer-link">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Mini Game Arcade. All games are original works and run 100% locally in your browser.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/portal.js"></script>
+</body>
+</html>
