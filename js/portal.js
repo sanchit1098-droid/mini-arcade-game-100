@@ -304,49 +304,18 @@ function setupFormSubmitHandler(formId, statusId, submitBtnId) {
     });
 }
 
-function setupFeedbackModal() {
-    const openBtn = document.getElementById('btnOpenFeedbackModal');
-    const modal = document.getElementById('feedbackModal');
-    const closeBtn = document.getElementById('btnCloseFeedbackModal');
-
-    if (!openBtn || !modal) return;
-
-    const openModal = () => {
-        modal.classList.add('active');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        const firstInput = document.getElementById('modalName');
-        if (firstInput) firstInput.focus();
-    };
-
-    const closeModal = () => {
-        modal.classList.remove('active');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        openBtn.focus();
-    };
-
-    openBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openModal();
-    });
-
-    closeBtn?.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     window.arcadePortal = new ArcadePortal();
-    setupFeedbackModal();
-    setupFormSubmitHandler('homeFeedbackForm', 'modalStatusMsg', 'btnSubmitModal');
     setupFormSubmitHandler('contactForm', 'formStatusMsg', 'btnSubmitContact');
+
+    // Smooth autofocus when redirected via #feedbackForm
+    if (window.location.hash === '#feedbackForm') {
+        setTimeout(() => {
+            const nameEl = document.getElementById('contactName');
+            if (nameEl) {
+                nameEl.focus();
+                nameEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 150);
+    }
 });
