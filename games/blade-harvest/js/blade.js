@@ -22,57 +22,45 @@ class Blade {
     }
 
     bindEvents() {
-        // Prevent default touch behaviors (pinch zoom, scroll, bounce)
-        const preventTouchDefault = (e) => {
-            if (e.target === this.canvas) {
-                e.preventDefault();
-            }
-        };
-
-        // Pointer / Touch / Mouse handlers
+        // Pointer Events unify mouse, pen, and touch input.
+        // CSS touch-action:none on the canvas prevents browser gestures.
         const getCanvasCoords = (e) => {
             const rect = this.canvas.getBoundingClientRect();
-            let clientX = 0;
-            let clientY = 0;
 
-            if (e.touches && e.touches.length > 0) {
-                clientX = e.touches[0].clientX;
-                clientY = e.touches[0].clientY;
-            } else if (e.changedTouches && e.changedTouches.length > 0) {
-                clientX = e.changedTouches[0].clientX;
-                clientY = e.changedTouches[0].clientY;
-            } else if (typeof e.clientX === 'number') {
-                clientX = e.clientX;
-                clientY = e.clientY;
-            }
-
-            // Map client coords to logical canvas coordinates (CSS pixels)
-            // Note: The 2D context is already scaled by dpr via ctx.scale(dpr, dpr) in game.js.
-            // Slicing math and visual rendering operate in logical coordinates (matching CSS pixels).
-            const logicalWidth = (this.game && this.game.width) || rect.width || this.canvas.clientWidth;
-            const logicalHeight = (this.game && this.game.height) || rect.height || this.canvas.clientHeight;
-
-            const scaleX = rect.width ? (logicalWidth / rect.width) : 1;
-            const scaleY = rect.height ? (logicalHeight / rect.height) : 1;
+            // Convert viewport coordinates into the game's logical CSS-pixel
+            // coordinate system. Do not multiply by devicePixelRatio here:
+            // the game context is already scaled for high-DPI rendering.
+            const logicalWidth = (this.game && this.game.width) || rect.width;
+            const logicalHeight = (this.game && this.game.height) || rect.height;
 
             return {
-                x: (clientX - rect.left) * scaleX,
-                y: (clientY - rect.top) * scaleY
+                x: rect.width ? (e.clientX - rect.left) * (logicalWidth / rect.width) : 0,
+                y: rect.height ? (e.clientY - rect.top) * (logicalHeight / rect.height) : 0
             };
         };
 
         const onDown = (e) => {
-            preventTouchDefault(e);
+            if (!e.isPrimary || (e.pointerType === 'mouse' && e.button !== 0)) return;
+            e.preventDefault();
+
             if (this.soundCtrl) this.soundCtrl.init();
+
             this.isSwiping = true;
             const pos = getCanvasCoords(e);
             this.currentPos = pos;
             this.points = [{ x: pos.x, y: pos.y, time: performance.now() }];
+
+            // Keep receiving move/up events even if the pointer leaves the canvas.
+            try {
+                this.canvas.setPointerCapture(e.pointerId);
+            } catch (_) {
+                // Pointer capture may be unavailable in older browsers.
+            }
         };
 
         const onMove = (e) => {
-            preventTouchDefault(e);
             if (!this.isSwiping) return;
+            e.preventDefault();
 
             const pos = getCanvasCoords(e);
             const now = performance.now();
@@ -83,7 +71,6 @@ class Blade {
                 const dy = pos.y - last.y;
                 const dist = Math.hypot(dx, dy);
 
-                // Play swoosh if moving fast enough
                 if (dist > 35 && now - this.lastSwooshTime > 220) {
                     if (this.soundCtrl) this.soundCtrl.playSwoosh();
                     this.lastSwooshTime = now;
@@ -95,20 +82,15 @@ class Blade {
         };
 
         const onUp = (e) => {
-            preventTouchDefault(e);
+            if (this.isSwiping) e.preventDefault();
             this.isSwiping = false;
         };
 
-        // Mouse events
-        this.canvas.addEventListener('mousedown', onDown);
-        window.addEventListener('mousemove', onMove);
-        window.addEventListener('mouseup', onUp);
-
-        // Touch events with passive: false so preventDefault works reliably
-        this.canvas.addEventListener('touchstart', onDown, { passive: false });
-        window.addEventListener('touchmove', onMove, { passive: false });
-        window.addEventListener('touchend', onUp, { passive: false });
-        window.addEventListener('touchcancel', onUp, { passive: false });
+        this.canvas.addEventListener('pointerdown', onDown, { passive: false });
+        this.canvas.addEventListener('pointermove', onMove, { passive: false });
+        this.canvas.addEventListener('pointerup', onUp, { passive: false });
+        this.canvas.addEventListener('pointercancel', onUp, { passive: false });
+        this.canvas.addEventListener('lostpointercapture', onUp);
     }
 
     update() {

@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "Mini Game Arcade - High-performance browser-based arcade portal",
   "scripts": {
-    "build": "node scripts/build.js || python scripts/build.py",
-    "build:node": "node scripts/build.js",
-    "build:py": "python scripts/build.py",
+    "build": "node scripts/build.js",
+    "audit": "node scripts/build.js",
     "dev": "python -m http.server 8080",
     "start": "python -m http.server 8080",
-    "test": "python scripts/build.py"
+    "test": "node scripts/build.js"
   },
   "keywords": [
     "html5",

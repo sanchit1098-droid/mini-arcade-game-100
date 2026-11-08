@@ -70,7 +70,7 @@ Before deploying, the following audits have been completed:
 - [x] **Secrets & Credentials**: Zero API keys, passwords, `.env` files, or secrets exist in the codebase.
 - [x] **Hardcoded URLs**: Zero references to `localhost` or `127.0.0.1` in source code.
 - [x] **Asset Independence**: All game graphics are generated via Canvas 2D; all thumbnails and logos are local SVG files in `assets/`; all audio is procedurally synthesized via Web Audio API.
-- [x] **Configuration**: [`vercel.json`](vercel.json) specifies `cleanUrls: true` and security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Cache-Control`).
+- [x] **Configuration**: [`vercel.json`](vercel.json) specifies `trailingSlash: true`, `outputDirectory: "."`, and security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Cache-Control`).
 
 ---
 

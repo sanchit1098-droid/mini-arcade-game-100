@@ -80,8 +80,9 @@ class FruitGame {
             this.height = height;
             this.dpr = dpr;
 
-            this.ctx.resetTransform?.();
-            this.ctx.scale(dpr, dpr);
+            // Set the transform absolutely instead of multiplying it.
+            // This prevents scaling from accumulating after repeated resizes.
+            this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         };
 
         window.addEventListener('resize', resize);
