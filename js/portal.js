@@ -201,6 +201,152 @@ class ArcadePortal {
     }
 }
 
+// -------------------------------------------------------------
+// Direct Email Form Handler (FormSubmit.co API Integration)
+// Automatically dispatches customer queries to sanchit1098@gmail.com
+// -------------------------------------------------------------
+function setupFormSubmitHandler(formId, statusId, submitBtnId) {
+    const form = document.getElementById(formId);
+    const statusMsg = document.getElementById(statusId);
+    const submitBtn = submitBtnId ? document.getElementById(submitBtnId) : form?.querySelector('button[type="submit"]');
+
+    if (!form || !statusMsg) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nameInput = form.querySelector('[name="name"]');
+        const emailInput = form.querySelector('[name="email"]');
+        const messageInput = form.querySelector('[name="message"]');
+        const topicInput = form.querySelector('[name="subject"], [name="topic"]');
+        const phoneInput = form.querySelector('[name="phone"]');
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
+        const message = messageInput ? messageInput.value.trim() : '';
+        const topic = topicInput ? topicInput.value : 'Customer Feedback';
+        const phone = phoneInput ? phoneInput.value.trim() : 'Not provided';
+
+        if (!name || !email || !message) {
+            statusMsg.className = 'form-status';
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = 'rgba(255, 56, 56, 0.15)';
+            statusMsg.style.border = '1px solid #ff3838';
+            statusMsg.style.color = '#ff3838';
+            statusMsg.textContent = 'Please fill out your Name, Email, and Message before submitting.';
+            return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            statusMsg.className = 'form-status';
+            statusMsg.style.display = 'block';
+            statusMsg.style.background = 'rgba(255, 56, 56, 0.15)';
+            statusMsg.style.border = '1px solid #ff3838';
+            statusMsg.style.color = '#ff3838';
+            statusMsg.textContent = 'Please enter a valid email address.';
+            return;
+        }
+
+        const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>SENDING QUERY...</span> <span>⏳</span>';
+        }
+
+        statusMsg.className = 'form-status';
+        statusMsg.style.display = 'block';
+        statusMsg.style.background = 'rgba(0, 242, 254, 0.12)';
+        statusMsg.style.border = '1px solid var(--primary-cyan)';
+        statusMsg.style.color = 'var(--primary-cyan)';
+        statusMsg.textContent = 'Sending your query directly to sanchit1098@gmail.com...';
+
+        try {
+            const payload = {
+                name: name,
+                email: email,
+                phone: phone,
+                topic: topic,
+                message: message,
+                _subject: `New Arcade Feedback from ${name} [${topic}]`,
+                _template: 'table',
+                _captcha: 'false'
+            };
+
+            const response = await fetch('https://formsubmit.co/ajax/sanchit1098@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                statusMsg.className = 'form-status success';
+                statusMsg.style.display = 'block';
+                statusMsg.style.background = 'rgba(46, 204, 113, 0.15)';
+                statusMsg.style.border = '1px solid var(--accent-green)';
+                statusMsg.style.color = var(--accent-green);
+                statusMsg.textContent = `🎉 Thank you, ${name}! Your feedback has been sent directly to sanchit1098@gmail.com. We appreciate your review!`;
+                form.reset();
+            } else {
+                throw new Error('API status: ' + response.status);
+            }
+        } catch (err) {
+            // Graceful fallback: trigger native submit
+            form.submit();
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+            }
+        }
+    });
+}
+
+function setupFeedbackModal() {
+    const openBtn = document.getElementById('btnOpenFeedbackModal');
+    const modal = document.getElementById('feedbackModal');
+    const closeBtn = document.getElementById('btnCloseFeedbackModal');
+
+    if (!openBtn || !modal) return;
+
+    const openModal = () => {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        const firstInput = document.getElementById('modalName');
+        if (firstInput) firstInput.focus();
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        openBtn.focus();
+    };
+
+    openBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openModal();
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     window.arcadePortal = new ArcadePortal();
+    setupFeedbackModal();
+    setupFormSubmitHandler('homeFeedbackForm', 'modalStatusMsg', 'btnSubmitModal');
+    setupFormSubmitHandler('contactForm', 'formStatusMsg', 'btnSubmitContact');
 });

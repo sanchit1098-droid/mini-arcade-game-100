@@ -174,10 +174,10 @@
                         <span>📞</span>
                         <span>+91 9816548170</span>
                     </a>
-                    <a href="mailto:sanchit1098@gmail.com?subject=Customer%20Review%20%2F%20Help%20-%20Mini%20Game%20Arcade" class="btn-play-game" style="width:auto; padding:10px 18px; text-decoration:none; display:inline-flex; align-items:center; gap:6px;" aria-label="Email Customer Support at sanchit1098@gmail.com">
-                        <span>✉️</span>
-                        <span>EMAIL US</span>
-                    </a>
+                    <button id="btnOpenFeedbackModal" class="btn-play-game" style="width:auto; padding:10px 20px; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;" aria-label="Open Customer Feedback Form">
+                        <span>📝</span>
+                        <span>FEEDBACK FORM</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -212,6 +212,62 @@
             </div>
         </div>
     </footer>
+
+    <!-- Feedback Form Modal Overlay -->
+    <div id="feedbackModal" class="feedback-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="feedbackModalTitle">
+        <div class="feedback-modal-card">
+            <button id="btnCloseFeedbackModal" class="feedback-modal-close" aria-label="Close Feedback Form">✖</button>
+            <div class="feedback-modal-header">
+                <span class="feedback-badge">⭐ CUSTOMER FEEDBACK & REVIEWS</span>
+                <h2 id="feedbackModalTitle" class="feedback-modal-title">Share Your Feedback & Review</h2>
+                <p class="feedback-modal-desc">Fill out your details below. Your feedback will be sent directly to <strong>sanchit1098@gmail.com</strong>.</p>
+            </div>
+
+            <form id="homeFeedbackForm" class="contact-form" action="https://formsubmit.co/sanchit1098@gmail.com" method="POST" novalidate>
+                <input type="hidden" name="_subject" value="New Customer Review & Feedback - Mini Game Arcade">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+
+                <div class="form-group">
+                    <label for="modalName" class="form-label">Your Name</label>
+                    <input type="text" id="modalName" name="name" class="form-input" placeholder="e.g. Alex Player" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalEmail" class="form-label">Your Email</label>
+                    <input type="email" id="modalEmail" name="email" class="form-input" placeholder="alex@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalPhone" class="form-label">Phone / WhatsApp (Optional)</label>
+                    <input type="tel" id="modalPhone" name="phone" class="form-input" placeholder="+91 ...">
+                </div>
+
+                <div class="form-group">
+                    <label for="modalTopic" class="form-label">Category</label>
+                    <select id="modalTopic" name="topic" class="form-input" style="cursor:pointer;">
+                        <option value="Customer Review & Rating">⭐ Customer Review & Rating</option>
+                        <option value="Gameplay Help & Query">🆘 Gameplay Help & Query</option>
+                        <option value="General Feedback">💬 General Feedback</option>
+                        <option value="Bug Report">🐛 Bug Report</option>
+                        <option value="New Game Suggestion">💡 New Game Suggestion</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="modalMessage" class="form-label">Your Review / Message</label>
+                    <textarea id="modalMessage" name="message" class="form-textarea" rows="4" placeholder="Share your experience, review of our games, or ask any question..." required></textarea>
+                </div>
+
+                <button type="submit" id="btnSubmitModal" class="btn-submit">
+                    <span>SEND FEEDBACK</span>
+                    <span>🚀</span>
+                </button>
+
+                <div id="modalStatusMsg" class="form-status"></div>
+            </form>
+        </div>
+    </div>
 
     <!-- Portal Scripts -->
     <script src="js/portal.js"></script>
