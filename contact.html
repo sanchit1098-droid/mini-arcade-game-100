@@ -38,12 +38,33 @@
     </header>
 
     <main id="mainContent" class="container page-container" role="main">
-        <h1 class="page-title">Contact Us</h1>
-        <p class="page-subtitle">Have a game idea, bug report, or feedback? We would love to hear from you.</p>
+        <h1 class="page-title">Customer Help & Reviews</h1>
+        <p class="page-subtitle">We value your gameplay experience! Reach out directly for player help, customer reviews, bug reports, or partnership inquiries.</p>
+
+        <!-- Direct Customer Help & Review Cards -->
+        <div class="contact-cards-grid">
+            <a href="tel:+919816548170" class="contact-card" aria-label="Call or WhatsApp Customer Help at +91 9816548170">
+                <div class="contact-card-icon" aria-hidden="true">📞</div>
+                <div class="contact-card-info">
+                    <span class="contact-card-label">Direct Contact / Phone</span>
+                    <strong class="contact-card-value">+91 9816548170</strong>
+                    <span class="contact-card-desc">Call or WhatsApp for immediate player help & feedback</span>
+                </div>
+            </a>
+
+            <a href="mailto:sanchit1098@gmail.com?subject=Customer%20Review%20%2F%20Help%20-%20Mini%20Game%20Arcade" class="contact-card" aria-label="Email Customer Support at sanchit1098@gmail.com">
+                <div class="contact-card-icon" aria-hidden="true">✉️</div>
+                <div class="contact-card-info">
+                    <span class="contact-card-label">Official Email Support</span>
+                    <strong class="contact-card-value">sanchit1098@gmail.com</strong>
+                    <span class="contact-card-desc">Send customer reviews, feedback, or game suggestions</span>
+                </div>
+            </a>
+        </div>
 
         <section class="content-block">
-            <h2>Send Us a Message</h2>
-            <p>Fill out the form below and we will get back to you as soon as possible.</p>
+            <h2>Player Review & Message Form</h2>
+            <p>Share your review of our games or get in touch with our development team below:</p>
 
             <form id="contactForm" class="contact-form" novalidate>
                 <div class="form-group">
@@ -59,20 +80,22 @@
                 <div class="form-group">
                     <label for="contactSubject" class="form-label">Topic</label>
                     <select id="contactSubject" name="subject" class="form-input" style="cursor:pointer;">
-                        <option value="feedback">General Feedback</option>
-                        <option value="bug">Bug Report / Performance Issue</option>
-                        <option value="game-idea">New Game Suggestion</option>
-                        <option value="other">Other Inquiry</option>
+                        <option value="review">⭐ Customer Review & Rating</option>
+                        <option value="help">🆘 Gameplay Help & Support</option>
+                        <option value="feedback">💬 General Feedback</option>
+                        <option value="bug">🐛 Bug Report / Performance Issue</option>
+                        <option value="game-idea">💡 New Game Suggestion</option>
+                        <option value="other">📬 Other Inquiry</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="contactMessage" class="form-label">Message</label>
-                    <textarea id="contactMessage" name="message" class="form-textarea" placeholder="Describe your question, suggestion, or bug in detail..." required></textarea>
+                    <label for="contactMessage" class="form-label">Message / Review</label>
+                    <textarea id="contactMessage" name="message" class="form-textarea" placeholder="Share your review of Blade Harvest or Chroma Breaker, or describe your question in detail..." required></textarea>
                 </div>
 
                 <button type="submit" class="btn-submit">
-                    <span>SEND MESSAGE</span>
+                    <span>SEND MESSAGE / REVIEW</span>
                     <span>✉️</span>
                 </button>
 
@@ -85,8 +108,11 @@
             <h3>Are all games on this site free to play?</h3>
             <p>Yes, 100%. All games are free, open to play directly in your browser, and do not require payments or micro-transactions.</p>
 
+            <h3>How quickly do you respond to customer inquiries?</h3>
+            <p>We review player messages and emails sent to <a href="mailto:sanchit1098@gmail.com" style="color:var(--primary-cyan);">sanchit1098@gmail.com</a> within 24 to 48 hours. For urgent inquiries, you can also reach us via phone at <a href="tel:+919816548170" style="color:var(--primary-cyan);">+91 9816548170</a>.</p>
+
             <h3>How can I submit my own indie game to be featured?</h3>
-            <p>If you have an original HTML5 canvas mini-game that meets our performance and privacy guidelines, send us a link via the form above!</p>
+            <p>If you have an original HTML5 canvas mini-game that meets our performance and privacy guidelines, send us a link via the form above or email!</p>
         </section>
     </main>
 
@@ -96,6 +122,15 @@
                 <div class="footer-brand">
                     <strong style="color:#fff; font-family:var(--font-heading);">MINI GAME ARCADE</strong>
                     <p style="color:var(--text-muted); font-size:0.8rem; margin-top:4px;">Original browser mini-games crafted with HTML5 Canvas.</p>
+                </div>
+                <div class="footer-contact">
+                    <strong style="color:#fff; font-size:0.85rem; font-family:var(--font-heading); margin-bottom:4px; display:block;">Customer Help & Reviews</strong>
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin:0 0 4px;">
+                        📞 Contact: <a href="tel:+919816548170">+91 9816548170</a>
+                    </p>
+                    <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">
+                        ✉️ Email: <a href="mailto:sanchit1098@gmail.com">sanchit1098@gmail.com</a>
+                    </p>
                 </div>
                 <ul class="footer-links">
                     <li><a href="about.html" class="footer-link">About</a></li>
