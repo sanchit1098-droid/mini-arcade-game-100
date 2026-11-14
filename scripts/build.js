@@ -21,7 +21,13 @@ function audit() {
         'privacy.html',
         'terms.html',
         path.join('games', 'blade-harvest', 'index.html'),
-        path.join('games', 'chroma-breaker', 'index.html')
+        path.join('games', 'chroma-breaker', 'index.html'),
+        path.join('games', 'neon-snake', 'index.html'),
+        path.join('games', 'space-invaders', 'index.html'),
+        path.join('games', 'neon-rush', 'index.html'),
+        path.join('games', 'puzzle-2048', 'index.html'),
+        path.join('games', 'whack-a-mole', 'index.html'),
+        path.join('games', 'memory-master', 'index.html')
     ];
 
     pages.forEach(rel => {

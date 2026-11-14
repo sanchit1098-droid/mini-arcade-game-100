@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="wmBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1222"/>
+      <stop offset="100%" stop-color="#03060d"/>
+    </linearGradient>
+    <filter id="moleGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="380" fill="url(#wmBg)"/>
+
+  <!-- Portal Holes Grid (3x2 preview) -->
+  <!-- Back Row Holes -->
+  <ellipse cx="150" cy="130" rx="60" ry="22" fill="#040812" stroke="#00f2fe" stroke-width="2" opacity="0.4"/>
+  <ellipse cx="300" cy="130" rx="60" ry="22" fill="#040812" stroke="#ff007f" stroke-width="2" filter="url(#moleGlow)"/>
+  <ellipse cx="450" cy="130" rx="60" ry="22" fill="#040812" stroke="#00f2fe" stroke-width="2" opacity="0.4"/>
+
+  <!-- Left Cyber Mole (Peaking) -->
+  <g transform="translate(125, 75)">
+    <path d="M 5 45 C 5 15, 45 15, 45 45 Z" fill="#1e293b" stroke="#00f2fe" stroke-width="2"/>
+    <circle cx="17" cy="28" r="4" fill="#00f2fe"/>
+    <circle cx="33" cy="28" r="4" fill="#00f2fe"/>
+    <circle cx="25" cy="36" r="3" fill="#ffea00"/>
+  </g>
+
+  <!-- Front Row Holes -->
+  <ellipse cx="150" cy="230" rx="75" ry="26" fill="#040812" stroke="#00ff88" stroke-width="2" opacity="0.5"/>
+  <ellipse cx="300" cy="245" rx="85" ry="30" fill="#03060c" stroke="#00f2fe" stroke-width="3" filter="url(#moleGlow)"/>
+  <ellipse cx="450" cy="230" rx="75" ry="26" fill="#040812" stroke="#ff9f1a" stroke-width="2" opacity="0.5"/>
+
+  <!-- Main Cyber Mole Bot (Popping up from center front hole) -->
+  <g transform="translate(250, 130)">
+    <!-- Body -->
+    <path d="M 10 95 C 10 20, 90 20, 90 95 Z" fill="#1e293b" stroke="#00f2fe" stroke-width="3" filter="url(#moleGlow)"/>
+    <path d="M 15 95 C 15 28, 85 28, 85 95 Z" fill="#0f172a"/>
+
+    <!-- Cyber Visor / Eyes -->
+    <rect x="24" y="42" width="52" height="16" rx="8" fill="#ff007f" filter="url(#moleGlow)"/>
+    <rect x="28" y="46" width="44" height="8" rx="4" fill="#ffffff"/>
+
+    <!-- Antenna -->
+    <line x1="50" y1="20" x2="50" y2="4" stroke="#00f2fe" stroke-width="3"/>
+    <circle cx="50" cy="4" r="5" fill="#ffea00" filter="url(#moleGlow)"/>
+
+    <!-- Cheeks & Snout -->
+    <circle cx="50" cy="68" r="7" fill="#ffea00"/>
+    <line x1="38" y1="68" x2="22" y2="65" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="38" y1="72" x2="22" y2="75" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="62" y1="68" x2="78" y2="65" stroke="#94a3b8" stroke-width="2"/>
+    <line x1="62" y1="72" x2="78" y2="75" stroke="#94a3b8" stroke-width="2"/>
+  </g>
+
+  <!-- Glowing Cyber Mallet / Hammer Striking -->
+  <g transform="translate(330, 80) rotate(-25)">
+    <!-- Handle -->
+    <rect x="0" y="40" width="12" height="110" rx="6" fill="#475569" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="2" y="60" width="8" height="80" fill="#00f2fe" opacity="0.6"/>
+    <!-- Hammer Head -->
+    <rect x="-30" y="10" width="72" height="36" rx="8" fill="#ffea00" stroke="#ffffff" stroke-width="2" filter="url(#moleGlow)"/>
+    <rect x="-24" y="16" width="60" height="24" rx="4" fill="#ff9f1a"/>
+  </g>
+
+  <!-- Impact Sparks / Lightning Burst -->
+  <polygon points="310,120 325,100 320,115 340,95 325,125 338,122 315,145" fill="#ffea00" filter="url(#moleGlow)"/>
+  <circle cx="300" cy="110" r="4" fill="#ffffff" filter="url(#moleGlow)"/>
+  <circle cx="340" cy="135" r="5" fill="#ff007f" filter="url(#moleGlow)"/>
+  <circle cx="280" cy="125" r="3" fill="#00f2fe" filter="url(#moleGlow)"/>
+
+  <!-- Title Badge Overlay -->
+  <rect x="190" y="325" width="220" height="36" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(0, 242, 254, 0.4)" stroke-width="1.5"/>
+  <text x="300" y="349" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#00f2fe" text-anchor="middle" letter-spacing="2">WHACK-A-MOLE</text>
+</svg>

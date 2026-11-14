@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>2048 Neon Puzzle | Mini Game Arcade</title>
+  <meta name="description" content="Merge cyber numbers to reach the legendary 2048 tile in this neon cyberpunk edition of the classic 2048 puzzle game!">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983125329285306"
+     crossorigin="anonymous"></script>
+  <!-- Trailing slash normalization for Vercel -->
+  <script>
+    if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('.html')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="game-container">
+    <div class="top-nav">
+      <a href="../../index.html" class="nav-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Arcade
+      </a>
+      <div class="game-title">2048 NEON</div>
+      <div class="nav-actions">
+        <button id="undoBtn" class="nav-btn" title="Undo Last Move">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          Undo
+        </button>
+        <button id="restartBtn" class="nav-btn" title="New Game">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+          </svg>
+          New
+        </button>
+      </div>
+    </div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="hud-box">
+        <span class="hud-label">SCORE</span>
+        <span class="hud-val" id="scoreVal">0</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">BEST</span>
+        <span class="hud-val high" id="bestVal">0</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">MOVES</span>
+        <span class="hud-val" id="moveVal">0</span>
+      </div>
+    </div>
+
+    <!-- Grid Container -->
+    <div class="puzzle-wrapper">
+      <div class="grid-board" id="gridBoard">
+        <!-- 16 Background Cells -->
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        <div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div><div class="grid-cell"></div>
+        
+        <!-- Tile Container for Animated Tiles -->
+        <div class="tile-container" id="tileContainer"></div>
+      </div>
+
+      <!-- Start Overlay -->
+      <div class="overlay" id="startOverlay">
+        <div class="modal">
+          <div class="modal-badge">CYBER PUZZLE</div>
+          <h1>2048 NEON</h1>
+          <p class="tagline">Join numbers and get to the neon <strong>2048 tile</strong>!</p>
+          <div class="instructions">
+            <div class="instruction-row">
+              <span class="key-badge">ARROWS / WASD</span>
+              <span>Slide all tiles across the cyber matrix</span>
+            </div>
+            <div class="instruction-row">
+              <span class="key-badge">SWIPE</span>
+              <span>Swipe in any direction on mobile touchscreens</span>
+            </div>
+            <div class="instruction-row">
+              <span class="key-badge">MERGE</span>
+              <span>When two tiles with the same number touch, they <strong>merge into one!</strong></span>
+            </div>
+          </div>
+          <button class="btn-primary" id="startBtn">PLAY PUZZLE</button>
+        </div>
+      </div>
+
+      <!-- Win Overlay -->
+      <div class="overlay hidden" id="winOverlay">
+        <div class="modal">
+          <div class="modal-badge win">OBJECTIVE COMPLETE</div>
+          <h2>YOU REACHED 2048!</h2>
+          <p>Cyber matrix conquered! You can keep playing to reach higher values.</p>
+          <div class="modal-actions">
+            <button class="btn-primary" id="keepPlayingBtn">KEEP PLAYING</button>
+            <button class="btn-secondary" id="winRestartBtn">NEW GAME</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Over Overlay -->
+      <div class="overlay hidden" id="gameOverOverlay">
+        <div class="modal">
+          <div class="modal-badge alert">NO MOVES REMAINING</div>
+          <h2>GAME OVER</h2>
+          <div class="final-stats">
+            <div class="stat-box">
+              <span class="lbl">FINAL SCORE</span>
+              <span class="val highlight" id="finalScore">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="lbl">HIGH SCORE</span>
+              <span class="val" id="finalBest">0</span>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-primary" id="retryBtn">TRY AGAIN</button>
+            <a href="../../index.html" class="btn-secondary">BACK TO ARCADE</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Directional D-Pad -->
+    <div class="mobile-dpad">
+      <div class="dpad-row">
+        <button class="dpad-btn" id="dpadUp" aria-label="Up">▲</button>
+      </div>
+      <div class="dpad-row">
+        <button class="dpad-btn" id="dpadLeft" aria-label="Left">◀</button>
+        <button class="dpad-btn" id="dpadDown" aria-label="Down">▼</button>
+        <button class="dpad-btn" id="dpadRight" aria-label="Right">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/puzzle.js"></script>
+</body>
+</html>

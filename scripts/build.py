@@ -26,7 +26,13 @@ def audit_html_pages():
         "privacy.html",
         "terms.html",
         os.path.join("games", "blade-harvest", "index.html"),
-        os.path.join("games", "chroma-breaker", "index.html")
+        os.path.join("games", "chroma-breaker", "index.html"),
+        os.path.join("games", "neon-snake", "index.html"),
+        os.path.join("games", "space-invaders", "index.html"),
+        os.path.join("games", "neon-rush", "index.html"),
+        os.path.join("games", "puzzle-2048", "index.html"),
+        os.path.join("games", "whack-a-mole", "index.html"),
+        os.path.join("games", "memory-master", "index.html")
     ]
 
     for rel_html in html_files:

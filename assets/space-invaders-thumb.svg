@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="siBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070919"/>
+      <stop offset="100%" stop-color="#020308"/>
+    </linearGradient>
+    <filter id="laserGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background Space -->
+  <rect width="600" height="380" fill="url(#siBg)"/>
+
+  <!-- Distant Stars -->
+  <circle cx="80" cy="50" r="1.5" fill="#ffffff" opacity="0.6"/>
+  <circle cx="150" cy="90" r="1" fill="#00f2fe" opacity="0.7"/>
+  <circle cx="230" cy="40" r="2" fill="#ffffff" opacity="0.8"/>
+  <circle cx="380" cy="70" r="1" fill="#ff007f" opacity="0.6"/>
+  <circle cx="490" cy="45" r="1.5" fill="#ffffff" opacity="0.9"/>
+  <circle cx="530" cy="110" r="1" fill="#00f2fe" opacity="0.5"/>
+  <circle cx="70" cy="220" r="1.5" fill="#ffffff" opacity="0.4"/>
+  <circle cx="520" cy="250" r="1" fill="#ffea00" opacity="0.7"/>
+
+  <!-- Row 1: Heavy Alien Boss/Commanders (Red/Magenta) -->
+  <g transform="translate(140, 50)" fill="#ff007f" filter="url(#laserGlow)">
+    <rect x="0" y="6" width="40" height="16" rx="4"/>
+    <rect x="8" y="0" width="24" height="6" rx="2"/>
+    <rect x="4" y="22" width="8" height="6" rx="2"/>
+    <rect x="28" y="22" width="8" height="6" rx="2"/>
+    <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+    <circle cx="28" cy="12" r="3" fill="#ffffff"/>
+  </g>
+  <g transform="translate(280, 50)" fill="#ff007f" filter="url(#laserGlow)">
+    <rect x="0" y="6" width="40" height="16" rx="4"/>
+    <rect x="8" y="0" width="24" height="6" rx="2"/>
+    <rect x="4" y="22" width="8" height="6" rx="2"/>
+    <rect x="28" y="22" width="8" height="6" rx="2"/>
+    <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+    <circle cx="28" cy="12" r="3" fill="#ffffff"/>
+  </g>
+  <g transform="translate(420, 50)" fill="#ff007f" filter="url(#laserGlow)">
+    <rect x="0" y="6" width="40" height="16" rx="4"/>
+    <rect x="8" y="0" width="24" height="6" rx="2"/>
+    <rect x="4" y="22" width="8" height="6" rx="2"/>
+    <rect x="28" y="22" width="8" height="6" rx="2"/>
+    <circle cx="12" cy="12" r="3" fill="#ffffff"/>
+    <circle cx="28" cy="12" r="3" fill="#ffffff"/>
+  </g>
+
+  <!-- Row 2: Medium Drones (Cyan) -->
+  <g transform="translate(100, 100)" fill="#00f2fe" filter="url(#laserGlow)">
+    <polygon points="18,0 36,12 30,24 6,24 0,12"/>
+    <circle cx="12" cy="12" r="2.5" fill="#ffffff"/>
+    <circle cx="24" cy="12" r="2.5" fill="#ffffff"/>
+  </g>
+  <g transform="translate(210, 100)" fill="#00f2fe" filter="url(#laserGlow)">
+    <polygon points="18,0 36,12 30,24 6,24 0,12"/>
+    <circle cx="12" cy="12" r="2.5" fill="#ffffff"/>
+    <circle cx="24" cy="12" r="2.5" fill="#ffffff"/>
+  </g>
+  <g transform="translate(320, 100)" fill="#00f2fe" filter="url(#laserGlow)">
+    <polygon points="18,0 36,12 30,24 6,24 0,12"/>
+    <circle cx="12" cy="12" r="2.5" fill="#ffffff"/>
+    <circle cx="24" cy="12" r="2.5" fill="#ffffff"/>
+  </g>
+  <g transform="translate(430, 100)" fill="#00f2fe" filter="url(#laserGlow)">
+    <polygon points="18,0 36,12 30,24 6,24 0,12"/>
+    <circle cx="12" cy="12" r="2.5" fill="#ffffff"/>
+    <circle cx="24" cy="12" r="2.5" fill="#ffffff"/>
+  </g>
+
+  <!-- Row 3: Scout Invaders (Lime Green) -->
+  <g transform="translate(150, 150)" fill="#00ff88" filter="url(#laserGlow)">
+    <circle cx="16" cy="12" r="14"/>
+    <rect x="4" y="20" width="6" height="8" rx="2"/>
+    <rect x="22" y="20" width="6" height="8" rx="2"/>
+    <circle cx="11" cy="10" r="3" fill="#070919"/>
+    <circle cx="21" cy="10" r="3" fill="#070919"/>
+  </g>
+  <g transform="translate(260, 150)" fill="#00ff88" filter="url(#laserGlow)">
+    <circle cx="16" cy="12" r="14"/>
+    <rect x="4" y="20" width="6" height="8" rx="2"/>
+    <rect x="22" y="20" width="6" height="8" rx="2"/>
+    <circle cx="11" cy="10" r="3" fill="#070919"/>
+    <circle cx="21" cy="10" r="3" fill="#070919"/>
+  </g>
+  <g transform="translate(370, 150)" fill="#00ff88" filter="url(#laserGlow)">
+    <circle cx="16" cy="12" r="14"/>
+    <rect x="4" y="20" width="6" height="8" rx="2"/>
+    <rect x="22" y="20" width="6" height="8" rx="2"/>
+    <circle cx="11" cy="10" r="3" fill="#070919"/>
+    <circle cx="21" cy="10" r="3" fill="#070919"/>
+  </g>
+
+  <!-- Alien Bomb Projectiles -->
+  <rect x="170" y="195" width="4" height="16" rx="2" fill="#ff007f" filter="url(#laserGlow)"/>
+  <rect x="385" y="185" width="4" height="16" rx="2" fill="#ffea00" filter="url(#laserGlow)"/>
+
+  <!-- Player Laser Beams -->
+  <rect x="286" y="210" width="5" height="26" rx="2.5" fill="#00f2fe" filter="url(#laserGlow)"/>
+  <rect x="309" y="210" width="5" height="26" rx="2.5" fill="#00f2fe" filter="url(#laserGlow)"/>
+
+  <!-- Player Fighter Ship -->
+  <g transform="translate(270, 260)">
+    <!-- Wings -->
+    <polygon points="30,0 45,35 60,35 55,45 5,45 0,35 15,35" fill="#00f2fe" filter="url(#laserGlow)"/>
+    <!-- Cockpit Core -->
+    <polygon points="30,5 38,32 22,32" fill="#ffffff"/>
+    <polygon points="30,8 35,28 25,28" fill="#00f2fe"/>
+    <!-- Thrusters Flame -->
+    <polygon points="20,45 25,56 30,45" fill="#ffea00" filter="url(#laserGlow)"/>
+    <polygon points="30,45 35,56 40,45" fill="#ffea00" filter="url(#laserGlow)"/>
+  </g>
+
+  <!-- Title Badge Overlay -->
+  <rect x="180" y="325" width="240" height="36" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(0, 242, 254, 0.4)" stroke-width="1.5"/>
+  <text x="300" y="349" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#00f2fe" text-anchor="middle" letter-spacing="2">SPACE INVADERS</text>
+</svg>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script>
+        // Ensure trailing slash for accurate relative asset resolution on static hosts
+        if (window.location.protocol.startsWith('http') && window.location.pathname.endsWith('/neon-snake')) {
+            window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+        }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#070a13">
+    <meta name="description" content="Play Neon Snake on Mini Game Arcade. Classic snake game reimagined with glowing cyberpunk visuals, bonus star food, dynamic speed scaling, and high scores.">
+    <title>Neon Snake | Mini Game Arcade</title>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983125329285306"
+     crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Floating Navigation -->
+        <div class="arcade-nav-bar">
+            <a href="../../index.html" class="btn-back-arcade" title="Back to Mini Game Arcade Home">
+                <span>◀</span>
+                <span>Arcade</span>
+            </a>
+        </div>
+
+        <!-- In-game HUD -->
+        <div class="hud">
+            <div class="hud-pill">SCORE: <strong id="hudScore">0</strong></div>
+            <div class="hud-pill">BEST: <strong id="hudBest">0</strong></div>
+            <button id="btnPause" class="icon-btn" title="Pause Game (P / Esc)">⏸</button>
+            <button id="btnSoundToggle" class="icon-btn" title="Toggle Sound">🔊</button>
+        </div>
+
+        <!-- Canvas -->
+        <canvas id="snakeCanvas"></canvas>
+
+        <!-- Mobile Touch D-Pad -->
+        <div class="mobile-dpad" id="mobileDpad" aria-label="Virtual directional controls">
+            <button class="dpad-btn dpad-up" id="dpadUp" aria-label="Up">▲</button>
+            <button class="dpad-btn dpad-left" id="dpadLeft" aria-label="Left">◀</button>
+            <button class="dpad-btn dpad-right" id="dpadRight" aria-label="Right">▶</button>
+            <button class="dpad-btn dpad-down" id="dpadDown" aria-label="Down">▼</button>
+        </div>
+
+        <!-- Start Menu Overlay -->
+        <div id="screenMenu" class="overlay-screen">
+            <div class="modal-card">
+                <h1 class="game-title">NEON SNAKE</h1>
+                <p class="tagline">Slither the cyber grid. Consume energy bits. Don't hit walls or your tail!</p>
+
+                <div style="background: rgba(8,12,22,0.6); padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 0.8rem; color: #94a3b8; text-align: left;">
+                    <p style="margin-bottom:6px;">⌨️ <strong>Arrow Keys / W, A, S, D:</strong> Steer snake</p>
+                    <p style="margin-bottom:6px;">📱 <strong>Touchscreen:</strong> Swipe gestures or tap on-screen D-Pad</p>
+                    <p style="margin-bottom:6px;">⭐ <strong>Pink & Gold Food:</strong> Bonus scores & growth</p>
+                    <p>⏸️ <strong>P / Esc:</strong> Pause game</p>
+                </div>
+
+                <button id="btnStart" class="btn btn-primary">START GAME 🐍</button>
+                <a href="../../index.html" class="btn btn-secondary">BACK TO ARCADE</a>
+            </div>
+        </div>
+
+        <!-- Pause Overlay -->
+        <div id="screenPause" class="overlay-screen hidden">
+            <div class="modal-card">
+                <h2 style="font-family: var(--font-heading); margin-bottom: 20px;">GAME PAUSED</h2>
+                <button id="btnResume" class="btn btn-primary">▶️ RESUME</button>
+                <button id="btnRestart" class="btn btn-secondary">🔄 RESTART</button>
+                <a href="../../index.html" class="btn btn-secondary">🏠 ARCADE HOME</a>
+            </div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="screenGameOver" class="overlay-screen hidden">
+            <div class="modal-card">
+                <h2 style="font-family: var(--font-heading); margin-bottom: 14px; color: #ff007f;">SYSTEM CRASHED</h2>
+                <p style="color: #94a3b8; margin-bottom: 4px;">FINAL SCORE</p>
+                <div id="goScore" style="font-family: var(--font-heading); font-size: 2.4rem; font-weight: 900; color: #00ff88; margin-bottom: 12px;">0</div>
+
+                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px;">BEST RECORD: <strong id="goBest" style="color: #ffea00;">0</strong></p>
+
+                <button id="btnPlayAgain" class="btn btn-primary">PLAY AGAIN 🔄</button>
+                <a href="../../index.html" class="btn btn-secondary">BACK TO ARCADE</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Engine -->
+    <script src="js/snake.js"></script>
+</body>
+</html>

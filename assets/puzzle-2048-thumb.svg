@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="puzBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0e1124"/>
+      <stop offset="100%" stop-color="#04060d"/>
+    </linearGradient>
+    <filter id="puzGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="380" fill="url(#puzBg)"/>
+
+  <!-- 4x4 Puzzle Grid Frame -->
+  <rect x="160" y="30" width="280" height="280" rx="16" fill="#13182b" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2"/>
+
+  <!-- Row 1 -->
+  <!-- Tile (0,0): 2 -->
+  <rect x="175" y="45" width="55" height="55" rx="8" fill="#1b2440" stroke="#00f2fe" stroke-width="1.5"/>
+  <text x="202" y="80" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" fill="#00f2fe" text-anchor="middle">2</text>
+
+  <!-- Tile (0,1): 4 -->
+  <rect x="240" y="45" width="55" height="55" rx="8" fill="#1b2440" stroke="#00ff88" stroke-width="1.5"/>
+  <text x="267" y="80" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" fill="#00ff88" text-anchor="middle">4</text>
+
+  <!-- Tile (0,2): 8 -->
+  <rect x="305" y="45" width="55" height="55" rx="8" fill="#2d2215" stroke="#ff9f1a" stroke-width="1.5"/>
+  <text x="332" y="80" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" fill="#ff9f1a" text-anchor="middle">8</text>
+
+  <!-- Tile (0,3): 16 -->
+  <rect x="370" y="45" width="55" height="55" rx="8" fill="#351a25" stroke="#ff3838" stroke-width="1.5"/>
+  <text x="397" y="80" font-family="'Outfit', sans-serif" font-size="20" font-weight="900" fill="#ff3838" text-anchor="middle">16</text>
+
+  <!-- Row 2 -->
+  <!-- Tile (1,0): 32 -->
+  <rect x="175" y="110" width="55" height="55" rx="8" fill="#381534" stroke="#ff007f" stroke-width="1.5"/>
+  <text x="202" y="145" font-family="'Outfit', sans-serif" font-size="20" font-weight="900" fill="#ff007f" text-anchor="middle">32</text>
+
+  <!-- Tile (1,1) & (1,2) merged center showcase: 2048! -->
+  <rect x="240" y="110" width="120" height="120" rx="12" fill="#3a300a" stroke="#ffea00" stroke-width="3" filter="url(#puzGlow)"/>
+  <rect x="245" y="115" width="110" height="110" rx="10" fill="#4d3f0a"/>
+  <text x="300" y="180" font-family="'Outfit', sans-serif" font-size="36" font-weight="900" fill="#ffea00" text-anchor="middle" filter="url(#puzGlow)">2048</text>
+
+  <!-- Tile (1,3): 64 -->
+  <rect x="370" y="110" width="55" height="55" rx="8" fill="#301540" stroke="#bf55ec" stroke-width="1.5"/>
+  <text x="397" y="145" font-family="'Outfit', sans-serif" font-size="20" font-weight="900" fill="#bf55ec" text-anchor="middle">64</text>
+
+  <!-- Row 3 -->
+  <!-- Tile (2,0): 128 -->
+  <rect x="175" y="175" width="55" height="55" rx="8" fill="#152b36" stroke="#00f2fe" stroke-width="2"/>
+  <text x="202" y="210" font-family="'Outfit', sans-serif" font-size="18" font-weight="900" fill="#00f2fe" text-anchor="middle">128</text>
+
+  <!-- Tile (2,3): 256 -->
+  <rect x="370" y="175" width="55" height="55" rx="8" fill="#153625" stroke="#00ff88" stroke-width="2"/>
+  <text x="397" y="210" font-family="'Outfit', sans-serif" font-size="18" font-weight="900" fill="#00ff88" text-anchor="middle">256</text>
+
+  <!-- Row 4 -->
+  <!-- Tile (3,0): 512 -->
+  <rect x="175" y="240" width="55" height="55" rx="8" fill="#3a2510" stroke="#ff9f1a" stroke-width="2"/>
+  <text x="202" y="275" font-family="'Outfit', sans-serif" font-size="18" font-weight="900" fill="#ff9f1a" text-anchor="middle">512</text>
+
+  <!-- Tile (3,1): 1024 -->
+  <rect x="240" y="240" width="55" height="55" rx="8" fill="#3d1420" stroke="#ff3838" stroke-width="2"/>
+  <text x="267" y="275" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#ff3838" text-anchor="middle">1024</text>
+
+  <!-- Tile (3,2): 2 -->
+  <rect x="305" y="240" width="55" height="55" rx="8" fill="#1b2440" stroke="#00f2fe" stroke-width="1.5"/>
+  <text x="332" y="275" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" fill="#00f2fe" text-anchor="middle">2</text>
+
+  <!-- Tile (3,3): 4 -->
+  <rect x="370" y="240" width="55" height="55" rx="8" fill="#1b2440" stroke="#00ff88" stroke-width="1.5"/>
+  <text x="397" y="275" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" fill="#00ff88" text-anchor="middle">4</text>
+
+  <!-- Floating Particles / Merge sparks -->
+  <circle cx="230" cy="100" r="3" fill="#ffea00" filter="url(#puzGlow)"/>
+  <circle cx="370" cy="95" r="4" fill="#ffea00" filter="url(#puzGlow)"/>
+  <circle cx="365" cy="235" r="3" fill="#ffea00" filter="url(#puzGlow)"/>
+
+  <!-- Title Badge Overlay -->
+  <rect x="200" y="325" width="200" height="36" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(255, 234, 0, 0.4)" stroke-width="1.5"/>
+  <text x="300" y="349" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#ffea00" text-anchor="middle" letter-spacing="2">2048 PUZZLE</text>
+</svg>

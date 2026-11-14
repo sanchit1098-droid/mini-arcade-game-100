@@ -4,7 +4,9 @@
     "title": "Blade Harvest",
     "subtitle": "Fruit Slicer Arcade",
     "category": "Action",
+    "categories": ["Action", "Arcade"],
     "tags": ["Action", "Arcade", "Casual", "Touch-Friendly"],
+    "keywords": ["fruit", "slice", "ninja", "blade", "slash", "sword", "combo", "bomb", "swipe"],
     "description": "Slice juicy fruits across the screen, dodge dangerous bombs, and chain massive combo multipliers in this fast-paced arcade game.",
     "thumbnail": "assets/blade-harvest-thumb.svg",
     "route": "games/blade-harvest/index.html",
@@ -25,8 +27,10 @@
     "id": "chroma-breaker",
     "title": "Chroma Breaker",
     "subtitle": "Cyber Brick Arcade",
-    "category": "Retro",
-    "tags": ["Retro", "Arcade", "Casual", "Touch-Friendly"],
+    "category": "Arcade",
+    "categories": ["Arcade", "Action"],
+    "tags": ["Arcade", "Action", "Retro", "Touch-Friendly"],
+    "keywords": ["brick", "breaker", "paddle", "ball", "breakout", "bounce", "retro", "neon", "cyber"],
     "description": "Shatter vibrant neon bricks with an energy pulse ball. Control paddle spin, angle your rebounds, and clear the grid without losing a life.",
     "thumbnail": "assets/chroma-breaker-thumb.svg",
     "route": "games/chroma-breaker/index.html",
@@ -42,5 +46,149 @@
     ],
     "featured": false,
     "releaseDate": "2026-10"
+  },
+  {
+    "id": "neon-snake",
+    "title": "Neon Snake",
+    "subtitle": "Cyber Slither Grid",
+    "category": "Arcade",
+    "categories": ["Arcade", "Strategy"],
+    "tags": ["Arcade", "Strategy", "Retro", "Touch-Friendly"],
+    "keywords": ["snake", "slither", "neon", "food", "grow", "speed", "classic", "retro", "grid"],
+    "description": "Slither through a pulsating neon cyber grid. Munch glowing energy bits, dodge walls and your own tail, and grab bonus star power-ups.",
+    "thumbnail": "assets/neon-snake-thumb.svg",
+    "route": "games/neon-snake/index.html",
+    "controls": {
+      "mouse": "On-screen directional D-pad & buttons",
+      "touch": "Swipe screen or tap responsive D-pad",
+      "keyboard": "Arrow keys or W, A, S, D to steer"
+    },
+    "features": [
+      "Dynamic speed scaling as snake grows",
+      "Special timed bonus stars & energy power-ups",
+      "Web Audio synthesized turn & eat sound effects"
+    ],
+    "featured": false,
+    "releaseDate": "2026-11"
+  },
+  {
+    "id": "space-invaders",
+    "title": "Space Invaders",
+    "subtitle": "Galactic Defense Arcade",
+    "category": "Action",
+    "categories": ["Action", "Arcade"],
+    "tags": ["Action", "Arcade", "Retro", "Touch-Friendly"],
+    "keywords": ["space", "invaders", "shooter", "aliens", "laser", "galaxy", "boss", "ship", "retro"],
+    "description": "Command your star fighter against relentless waves of descending alien formations. Blast invaders, dodge plasma bombs, and defeat epic bosses.",
+    "thumbnail": "assets/space-invaders-thumb.svg",
+    "route": "games/space-invaders/index.html",
+    "controls": {
+      "mouse": "Drag ship left/right, click to shoot",
+      "touch": "Drag finger to steer, tap fire button",
+      "keyboard": "Left / Right Arrow (or A, D) to move, Space to fire"
+    },
+    "features": [
+      "Multi-tier alien squadrons with unique attacks",
+      "Intense Mothership Boss battles and wave progression",
+      "Explosive particle bursts & synthesized laser FX"
+    ],
+    "featured": false,
+    "releaseDate": "2026-11"
+  },
+  {
+    "id": "neon-rush",
+    "title": "Neon Rush",
+    "subtitle": "Endless Cyber Runner",
+    "category": "Adventure",
+    "categories": ["Adventure", "Arcade"],
+    "tags": ["Adventure", "Arcade", "Action", "Touch-Friendly"],
+    "keywords": ["runner", "rush", "endless", "jump", "slide", "parkour", "coins", "speed", "cyberpunk"],
+    "description": "Sprint down an endless synthwave highway at breakneck speed. Leap over laser spikes, slide under plasma gates, and collect glowing power-ups.",
+    "thumbnail": "assets/neon-rush-thumb.svg",
+    "route": "games/neon-rush/index.html",
+    "controls": {
+      "mouse": "Click Jump / Slide on-screen controls",
+      "touch": "Swipe Up to Jump, Swipe Down to Slide",
+      "keyboard": "Up / Space to Jump, Down / S to Slide"
+    },
+    "features": [
+      "Gradual speed acceleration & distance tracker",
+      "Magnet, Shield, and 2x Multiplier power-ups",
+      "Synthwave perspective grid & neon sun aesthetics"
+    ],
+    "featured": false,
+    "releaseDate": "2026-11"
+  },
+  {
+    "id": "puzzle-2048",
+    "title": "2048 Puzzle",
+    "subtitle": "Neon Number Merger",
+    "category": "Puzzle",
+    "categories": ["Puzzle", "Strategy"],
+    "tags": ["Puzzle", "Strategy", "Brain", "Touch-Friendly"],
+    "keywords": ["2048", "puzzle", "numbers", "merge", "math", "tiles", "brain", "strategy", "logic"],
+    "description": "Slide and merge matching neon number tiles to reach the legendary 2048 tile. Features silky smooth merge animations, undo move, and high scores.",
+    "thumbnail": "assets/puzzle-2048-thumb.svg",
+    "route": "games/puzzle-2048/index.html",
+    "controls": {
+      "mouse": "Click & Drag in direction to slide",
+      "touch": "Swipe Left, Right, Up, or Down",
+      "keyboard": "Arrow keys or W, A, S, D to slide tiles"
+    },
+    "features": [
+      "Silky animated tile transitions & merge pulses",
+      "Undo last move & restart at any time",
+      "Harmonic synth chords that ascend with tile value"
+    ],
+    "featured": false,
+    "releaseDate": "2026-11"
+  },
+  {
+    "id": "whack-a-mole",
+    "title": "Whack-a-Mole",
+    "subtitle": "Cyber Bot Reaction",
+    "category": "Arcade",
+    "categories": ["Arcade", "Action"],
+    "tags": ["Arcade", "Action", "Casual", "Touch-Friendly"],
+    "keywords": ["whack", "mole", "reaction", "speed", "reflex", "bot", "hammer", "portal", "frenzy"],
+    "description": "Test your reflexes against mischievous cyber bots popping out of neon portals. Whack gold bots for bonus points and avoid explosive glitch bombs!",
+    "thumbnail": "assets/whack-a-mole-thumb.svg",
+    "route": "games/whack-a-mole/index.html",
+    "controls": {
+      "mouse": "Click directly on popping cyber bots",
+      "touch": "Tap bots on touchscreen before they retreat",
+      "keyboard": "Number keys 1-9 corresponding to 3x3 holes"
+    },
+    "features": [
+      "4 Bot Types: Standard, Golden, Glitch Bomb, Time Freeze",
+      "Dynamic 60s countdown & combo multiplier streak",
+      "Electric mallet impact sparks & synthesized audio"
+    ],
+    "featured": false,
+    "releaseDate": "2026-11"
+  },
+  {
+    "id": "memory-master",
+    "title": "Memory Master",
+    "subtitle": "Cyber Sequence Simon",
+    "category": "Puzzle",
+    "categories": ["Puzzle", "Strategy"],
+    "tags": ["Puzzle", "Strategy", "Brain", "Touch-Friendly"],
+    "keywords": ["memory", "simon", "sequence", "sound", "music", "colors", "brain", "pattern", "recall"],
+    "description": "Challenge your visual and auditory recall. Watch the four glowing neon quadrants pulse with harmonic synth chimes and repeat the sequence.",
+    "thumbnail": "assets/memory-master-thumb.svg",
+    "route": "games/memory-master/index.html",
+    "controls": {
+      "mouse": "Click glowing colored quadrant pads",
+      "touch": "Tap quadrant pads on touchscreen",
+      "keyboard": "1, 2, 3, 4 or Q, W, A, S or Arrow keys"
+    },
+    "features": [
+      "4 Distinct musical frequencies & neon glow ripples",
+      "Increasing sequence length & speed progression",
+      "Level tracking, best streak, and audio visualizer"
+    ],
+    "featured": false,
+    "releaseDate": "2026-11"
   }
 ]

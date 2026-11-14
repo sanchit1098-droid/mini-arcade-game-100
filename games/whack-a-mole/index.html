@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Cyber Whack | Mini Game Arcade</title>
+  <meta name="description" content="Fast-paced cyber reaction arcade game! Whack rogue cyber bots, dodge glitch bombs, collect time bonuses, and hit record combos!">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983125329285306"
+     crossorigin="anonymous"></script>
+  <!-- Trailing slash normalization for Vercel -->
+  <script>
+    if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('.html')) {
+      window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="game-container">
+    <div class="top-nav">
+      <a href="../../index.html" class="nav-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Arcade
+      </a>
+      <div class="game-title">CYBER WHACK</div>
+      <button id="pauseBtn" class="nav-btn icon-btn" title="Pause Game">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+    </div>
+
+    <!-- HUD -->
+    <div class="hud">
+      <div class="hud-box">
+        <span class="hud-label">TIME</span>
+        <span class="hud-val timer" id="timeVal">60s</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">SCORE</span>
+        <span class="hud-val" id="scoreVal">0</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">COMBO</span>
+        <span class="hud-val combo" id="comboVal">x1</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">BEST</span>
+        <span class="hud-val high" id="bestVal">0</span>
+      </div>
+    </div>
+
+    <!-- Arcade Grid Arena -->
+    <div class="arena-wrapper">
+      <div class="grid-arena" id="gridArena">
+        <!-- 9 Cyber Portals -->
+        <div class="hole" data-index="0"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="1"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="2"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="3"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="4"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="5"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="6"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="7"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+        <div class="hole" data-index="8"><div class="portal-rim"></div><div class="bot-slot"></div></div>
+      </div>
+
+      <!-- Start Overlay -->
+      <div class="overlay" id="startOverlay">
+        <div class="modal">
+          <div class="modal-badge">REACTION ARCADE</div>
+          <h1>CYBER WHACK</h1>
+          <p class="tagline">Whack cyber bots before they dive back into the portal!</p>
+          <div class="bot-legend">
+            <div class="legend-item">
+              <span class="legend-icon bot-standard">🤖</span>
+              <span><strong>Cyber Bot</strong> (+10 pts)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon bot-gold">⭐</span>
+              <span><strong>Golden Bot</strong> (+30 pts)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon bot-chrono">⌛</span>
+              <span><strong>Chrono Bot</strong> (+5s Time)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-icon bot-bomb">💣</span>
+              <span><strong>Glitch Bomb</strong> (-20 pts & breaks combo!)</span>
+            </div>
+          </div>
+          <button class="btn-primary" id="startBtn">START WHACKING</button>
+        </div>
+      </div>
+
+      <!-- Pause Overlay -->
+      <div class="overlay hidden" id="pauseOverlay">
+        <div class="modal">
+          <h2>GAME PAUSED</h2>
+          <p>Take a breath and get your reflexes ready.</p>
+          <div class="modal-actions">
+            <button class="btn-primary" id="resumeBtn">RESUME</button>
+            <button class="btn-secondary" id="pauseRestartBtn">RESTART</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Over Overlay -->
+      <div class="overlay hidden" id="gameOverOverlay">
+        <div class="modal">
+          <div class="modal-badge alert">TIME EXPIRED</div>
+          <h2>SYSTEM STANDBY</h2>
+          <div class="final-stats">
+            <div class="stat-box">
+              <span class="lbl">BOTS SMASHED</span>
+              <span class="val" id="finalHits">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="lbl">MAX COMBO</span>
+              <span class="val gold" id="finalCombo">x1</span>
+            </div>
+            <div class="stat-box">
+              <span class="lbl">TOTAL SCORE</span>
+              <span class="val highlight" id="finalScore">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="lbl">NEW RECORD?</span>
+              <span class="val" id="newRecordStatus">-</span>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn-primary" id="retryBtn">PLAY AGAIN</button>
+            <a href="../../index.html" class="btn-secondary">BACK TO ARCADE</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/mole.js"></script>
+</body>
+</html>

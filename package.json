@@ -15,8 +15,17 @@
     "arcade",
     "game",
     "fruit-slicer",
-    "brick-breaker"
+    "brick-breaker",
+    "snake",
+    "space-invaders",
+    "endless-runner",
+    "puzzle-2048",
+    "whack-a-mole",
+    "memory-game"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
 }

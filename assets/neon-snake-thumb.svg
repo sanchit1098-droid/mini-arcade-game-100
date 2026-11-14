@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
+  <defs>
+    <linearGradient id="nsBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1329"/>
+      <stop offset="100%" stop-color="#030712"/>
+    </linearGradient>
+    <linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#00ff88"/>
+    </linearGradient>
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <pattern id="gridPattern" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(0, 242, 254, 0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="380" fill="url(#nsBg)"/>
+  <rect width="600" height="380" fill="url(#gridPattern)"/>
+
+  <!-- Glowing Food -->
+  <circle cx="440" cy="140" r="16" fill="#ff007f" filter="url(#neonGlow)"/>
+  <circle cx="440" cy="140" r="10" fill="#ffffff"/>
+  <polygon points="440,118 444,126 452,126 446,132 448,140 440,135 432,140 434,132 428,126 436,126" fill="#ffea00" filter="url(#neonGlow)"/>
+
+  <!-- Bonus Star Food -->
+  <circle cx="160" cy="270" r="12" fill="#ffea00" filter="url(#neonGlow)"/>
+  <polygon points="160,260 163,267 170,267 165,272 167,279 160,275 153,279 155,272 150,267 157,267" fill="#ffffff"/>
+
+  <!-- Snake Body Segments -->
+  <!-- Tail to Head path -->
+  <rect x="120" y="190" width="28" height="28" rx="8" fill="#00ff88" opacity="0.35"/>
+  <rect x="150" y="190" width="28" height="28" rx="8" fill="#00ff88" opacity="0.5"/>
+  <rect x="180" y="190" width="28" height="28" rx="8" fill="#00ff88" opacity="0.65"/>
+  <rect x="210" y="190" width="28" height="28" rx="8" fill="#00ff88" opacity="0.8"/>
+  <rect x="210" y="160" width="28" height="28" rx="8" fill="#00ff88" filter="url(#neonGlow)"/>
+  <rect x="210" y="130" width="28" height="28" rx="8" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <rect x="240" y="130" width="28" height="28" rx="8" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <rect x="270" y="130" width="28" height="28" rx="8" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <rect x="300" y="130" width="28" height="28" rx="8" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <rect x="330" y="130" width="28" height="28" rx="8" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <rect x="360" y="130" width="28" height="28" rx="8" fill="#00f2fe" filter="url(#neonGlow)"/>
+
+  <!-- Snake Head -->
+  <rect x="390" y="126" width="36" height="36" rx="10" fill="#ffffff" filter="url(#neonGlow)"/>
+  <rect x="393" y="129" width="30" height="30" rx="8" fill="url(#snakeGrad)"/>
+  <circle cx="414" cy="138" r="4" fill="#070a13"/>
+  <circle cx="414" cy="150" r="4" fill="#070a13"/>
+  <circle cx="415" cy="137" r="1.5" fill="#ffffff"/>
+  <circle cx="415" cy="149" r="1.5" fill="#ffffff"/>
+
+  <!-- Neon Particles -->
+  <circle cx="455" cy="125" r="3" fill="#ff007f" filter="url(#neonGlow)"/>
+  <circle cx="465" cy="150" r="2" fill="#ff007f"/>
+  <circle cx="380" cy="115" r="3" fill="#00f2fe" filter="url(#neonGlow)"/>
+  <circle cx="340" cy="170" r="2" fill="#00ff88"/>
+
+  <!-- Title Badge Overlay -->
+  <rect x="200" y="315" width="200" height="36" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(0, 255, 136, 0.4)" stroke-width="1.5"/>
+  <text x="300" y="339" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#00ff88" text-anchor="middle" letter-spacing="2">NEON SNAKE</text>
+</svg>
