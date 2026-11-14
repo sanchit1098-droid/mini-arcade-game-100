@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <script>
         // Ensure trailing slash for accurate relative asset resolution on static hosts
-        if (window.location.protocol.startsWith('http') && window.location.pathname.endsWith('/space-invaders')) {
+        if (!window.location.pathname.endsWith('/') && !window.location.pathname.endsWith('.html')) {
             window.location.replace(window.location.pathname + '/' + window.location.search + window.location.hash);
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#070919">
-    <meta name="description" content="Play Space Invaders on Mini Game Arcade. Defend the galaxy from alien formations, blast alien squadrons, conquer multi-tier boss battles, and beat the high score.">
+    <meta name="description" content="Play the definitive arcade edition of Space Invaders on Mini Game Arcade. Battle through 10 intense levels, defeat epic boss ships, collect power-ups, and conquer the high score.">
     <title>Space Invaders | Mini Game Arcade</title>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4983125329285306"
      crossorigin="anonymous"></script>
 
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Orbitron:wght@600;700;900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,7 +29,9 @@
         <!-- Floating Navigation -->
         <div class="arcade-nav-bar">
             <a href="../../index.html" class="btn-back-arcade" title="Back to Mini Game Arcade Home">
-                <span>◀</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
                 <span>Arcade</span>
             </a>
         </div>
@@ -36,14 +39,39 @@
         <!-- In-game HUD -->
         <div class="hud">
             <div class="hud-pill">SCORE: <strong id="hudScore">0</strong></div>
-            <div class="hud-pill">WAVE: <strong id="hudWave" style="color:#ffea00;">1</strong></div>
-            <div class="hud-pill" id="hudLives">❤️❤️❤️</div>
+            <div class="hud-pill">LEVEL: <strong id="hudWave" class="accent-gold">1 / 10</strong></div>
+            <div class="hud-pill">BEST: <strong id="hudBest" class="accent-cyan">0</strong></div>
+            <div class="hud-pill" id="hudLives" title="Shield Integrity / Remaining Ships">❤️❤️❤️</div>
             <button id="btnPause" class="icon-btn" title="Pause Game (P / Esc)">⏸</button>
             <button id="btnSoundToggle" class="icon-btn" title="Toggle Sound">🔊</button>
         </div>
 
+        <!-- Active Power-up Badges Container -->
+        <div class="powerup-status" id="hudPowerups">
+            <!-- Dynamically populated badges: ⚡ RAPID FIRE | ♊ DOUBLE SHOT | 🔱 SPREAD | 🛡️ SHIELD -->
+        </div>
+
+        <!-- Boss Health Bar (Top Center) -->
+        <div class="boss-health-container hidden" id="bossHealthContainer">
+            <div class="boss-header">
+                <span class="boss-tag">ALERT // BOSS DETECTED</span>
+                <span class="boss-name" id="bossName">ORBITAL DESTROYER</span>
+            </div>
+            <div class="boss-bar-track">
+                <div class="boss-bar-fill" id="bossBarFill" style="width: 100%;"></div>
+            </div>
+        </div>
+
         <!-- Canvas -->
         <canvas id="invadersCanvas"></canvas>
+
+        <!-- Wave / Level Transition Banner -->
+        <div id="levelBanner" class="level-banner hidden">
+            <div class="banner-content">
+                <div class="banner-sub" id="bannerSub">INCOMING INVASION FORCE</div>
+                <div class="banner-title" id="bannerTitle">LEVEL 1</div>
+            </div>
+        </div>
 
         <!-- Mobile Touch Controls -->
         <div class="mobile-space-controls">
@@ -51,20 +79,40 @@
                 <button class="touch-btn" id="btnLeft" aria-label="Steer Left">◀</button>
                 <button class="touch-btn" id="btnRight" aria-label="Steer Right">▶</button>
             </div>
-            <button class="touch-btn touch-fire-btn" id="btnFire" aria-label="Fire Lasers">🔥</button>
+            <button class="touch-btn touch-fire-btn" id="btnFire" aria-label="Fire Lasers">
+                <span>🔥</span>
+                <span class="touch-fire-label">FIRE</span>
+            </button>
         </div>
 
         <!-- Start Menu Overlay -->
         <div id="screenMenu" class="overlay-screen">
             <div class="modal-card">
+                <div class="modal-badge">10-LEVEL ARCADE CAMPAIGN</div>
                 <h1 class="game-title">SPACE INVADERS</h1>
-                <p class="tagline">Alien fleet incoming! Eliminate invaders, dodge plasma, and survive the Mothership Boss.</p>
+                <p class="tagline">An alien armada threatens Earth. Blast through 10 escalating sectors and destroy the Galactic Mothership!</p>
 
-                <div style="background: rgba(8,12,22,0.6); padding: 12px; border-radius: 12px; margin-bottom: 20px; font-size: 0.8rem; color: #94a3b8; text-align: left;">
-                    <p style="margin-bottom:6px;">⌨️ <strong>Arrow Keys / A, D:</strong> Move ship</p>
-                    <p style="margin-bottom:6px;">🚀 <strong>Spacebar:</strong> Fire dual lasers</p>
-                    <p style="margin-bottom:6px;">📱 <strong>Touchscreen:</strong> Drag ship or tap on-screen ◀ ▶ 🔥</p>
-                    <p>👾 <strong>Boss Wave:</strong> Giant Mothership with laser spread attacks!</p>
+                <div class="instructions-box">
+                    <div class="inst-row">
+                        <span class="inst-key">⌨️ A / D / ARROWS</span>
+                        <span>Steer spaceship horizontally</span>
+                    </div>
+                    <div class="inst-row">
+                        <span class="inst-key">🚀 SPACEBAR</span>
+                        <span>Fire lasers (hold down for auto-fire)</span>
+                    </div>
+                    <div class="inst-row">
+                        <span class="inst-key">📱 MOBILE TOUCH</span>
+                        <span>Drag ship on screen or tap ◀ ▶ 🔥 buttons</span>
+                    </div>
+                    <div class="inst-row">
+                        <span class="inst-key">🎁 POWER-UPS</span>
+                        <span>Grab Rapid Fire ⚡, Double ♊, Spread 🔱, Shield 🛡️ & Lives ❤️</span>
+                    </div>
+                    <div class="inst-row">
+                        <span class="inst-key">👾 BOSS BATTLES</span>
+                        <span>Survive Destroyer at Level 5 & Mothership Overlord at Level 10!</span>
+                    </div>
                 </div>
 
                 <button id="btnStart" class="btn btn-primary">LAUNCH MISSION 🛸</button>
@@ -75,9 +123,11 @@
         <!-- Pause Overlay -->
         <div id="screenPause" class="overlay-screen hidden">
             <div class="modal-card">
-                <h2 style="font-family: var(--font-heading); margin-bottom: 20px;">MISSION PAUSED</h2>
+                <div class="modal-badge">SYSTEM SUSPENDED</div>
+                <h2 class="modal-title">MISSION PAUSED</h2>
+                <p class="tagline">Tactical radar on standby.</p>
                 <button id="btnResume" class="btn btn-primary">▶️ RESUME</button>
-                <button id="btnRestart" class="btn btn-secondary">🔄 RESTART</button>
+                <button id="btnRestart" class="btn btn-secondary">🔄 RESTART MISSION</button>
                 <a href="../../index.html" class="btn btn-secondary">🏠 ARCADE HOME</a>
             </div>
         </div>
@@ -85,14 +135,61 @@
         <!-- Game Over Overlay -->
         <div id="screenGameOver" class="overlay-screen hidden">
             <div class="modal-card">
-                <h2 id="goTitle" style="font-family: var(--font-heading); margin-bottom: 14px; color: #ff007f;">MISSION FAILED</h2>
-                <p style="color: #94a3b8; margin-bottom: 4px;">FINAL SCORE</p>
-                <div id="goScore" style="font-family: var(--font-heading); font-size: 2.4rem; font-weight: 900; color: #00f2fe; margin-bottom: 12px;">0</div>
+                <div class="modal-badge alert">CRITICAL FAILURE</div>
+                <h2 id="goTitle" class="modal-title alert-text">MISSION FAILED</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-lbl">FINAL SCORE</span>
+                        <span class="stat-val accent-cyan" id="goScore">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">SECTOR REACHED</span>
+                        <span class="stat-val accent-gold" id="goWave">Level 1</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">ALIENS DESTROYED</span>
+                        <span class="stat-val" id="goKills">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">HIGH SCORE</span>
+                        <span class="stat-val accent-pink" id="goBest">0</span>
+                    </div>
+                </div>
 
-                <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px;">BEST RECORD: <strong id="goBest" style="color: #ffea00;">0</strong></p>
-
-                <button id="btnPlayAgain" class="btn btn-primary">REDEPLOY 🔄</button>
+                <button id="btnPlayAgain" class="btn btn-primary">REDEPLOY SHIP 🔄</button>
                 <a href="../../index.html" class="btn btn-secondary">BACK TO ARCADE</a>
+            </div>
+        </div>
+
+        <!-- Victory Overlay (Beating Level 10) -->
+        <div id="screenVictory" class="overlay-screen hidden">
+            <div class="modal-card victory-card">
+                <div class="modal-badge victory">CAMPAIGN COMPLETE</div>
+                <h2 class="modal-title victory-text">GALAXY SAVED! 🏆</h2>
+                <p class="tagline">The Mothership Overlord has exploded into cosmic dust. You are the ultimate Ace Pilot!</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-lbl">VICTORY SCORE</span>
+                        <span class="stat-val accent-gold" id="vicScore">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">SHIPS REMAINING</span>
+                        <span class="stat-val accent-green" id="vicLives">3</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">ALL 10 SECTORS</span>
+                        <span class="stat-val accent-cyan">CLEARED 100%</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">NEW RECORD?</span>
+                        <span class="stat-val accent-gold" id="vicRecordStatus">-</span>
+                    </div>
+                </div>
+
+                <button id="btnVicPlayAgain" class="btn btn-primary">PLAY AGAIN 🛸</button>
+                <a href="../../index.html" class="btn btn-secondary">RETURN TO ARCADE</a>
             </div>
         </div>
     </div>
