@@ -216,10 +216,18 @@
       this.streak = 1;
       this.maxStreakAchieved = 1;
 
-      // Sequence
+      // Sequence & Timers (prevent memory leaks & duplicate loops on restart)
       this.sequence = [];
       this.playerStep = 0;
       this.playbackIntervalId = null;
+      this.countdownIntervalId = null;
+      this.turnStartTimeoutId = null;
+      this.nextRoundTimeoutId = null;
+      this.gameOverTimeoutId = null;
+      this.comboTimeoutId = null;
+      this.shakeTimeoutId = null;
+      this.pulseTimeoutId = null;
+      this.flashTimeoutIds = [];
 
       // Timed Mode Clock
       this.timerDuration = 0;
@@ -369,9 +377,57 @@
       });
     }
 
+    clearAllTimers() {
+      if (this.countdownIntervalId) {
+        clearInterval(this.countdownIntervalId);
+        this.countdownIntervalId = null;
+      }
+      if (this.playbackIntervalId) {
+        clearInterval(this.playbackIntervalId);
+        this.playbackIntervalId = null;
+      }
+      if (this.timerIntervalId) {
+        clearInterval(this.timerIntervalId);
+        this.timerIntervalId = null;
+      }
+      if (this.turnStartTimeoutId) {
+        clearTimeout(this.turnStartTimeoutId);
+        this.turnStartTimeoutId = null;
+      }
+      if (this.nextRoundTimeoutId) {
+        clearTimeout(this.nextRoundTimeoutId);
+        this.nextRoundTimeoutId = null;
+      }
+      if (this.gameOverTimeoutId) {
+        clearTimeout(this.gameOverTimeoutId);
+        this.gameOverTimeoutId = null;
+      }
+      if (this.comboTimeoutId) {
+        clearTimeout(this.comboTimeoutId);
+        this.comboTimeoutId = null;
+      }
+      if (this.shakeTimeoutId) {
+        clearTimeout(this.shakeTimeoutId);
+        this.shakeTimeoutId = null;
+      }
+      if (this.pulseTimeoutId) {
+        clearTimeout(this.pulseTimeoutId);
+        this.pulseTimeoutId = null;
+      }
+      if (Array.isArray(this.flashTimeoutIds)) {
+        this.flashTimeoutIds.forEach(id => clearTimeout(id));
+        this.flashTimeoutIds = [];
+      }
+      if (Array.isArray(this.pads)) {
+        this.pads.forEach(p => p.classList.remove('active'));
+      }
+      this.countdownOverlay?.classList.add('hidden');
+      this.consoleWrapper?.classList.remove('glitch-shake');
+      this.comboPopup?.classList.add('hidden');
+    }
+
     openMainMenu() {
-      this.stopTimer();
-      clearInterval(this.playbackIntervalId);
+      this.clearAllTimers();
       this.state = 'MENU';
 
       this.screenPause?.classList.add('hidden');
@@ -405,6 +461,7 @@
 
     // --- Game Initialization ---
     startNewGame(mode = 'classic') {
+      this.clearAllTimers();
       this.sound.init();
       this.selectedMode = mode;
       this.level = 1;
@@ -459,7 +516,8 @@
         this.countdownNumber.textContent = count;
         this.sound.playCountdownTick();
 
-        const timerId = setInterval(() => {
+        if (this.countdownIntervalId) clearInterval(this.countdownIntervalId);
+        this.countdownIntervalId = setInterval(() => {
           count--;
           if (count > 0) {
             this.countdownNumber.textContent = count;
@@ -468,7 +526,8 @@
             this.countdownNumber.textContent = 'GO!';
             this.sound.playCountdownGo();
           } else {
-            clearInterval(timerId);
+            clearInterval(this.countdownIntervalId);
+            this.countdownIntervalId = null;
             this.countdownOverlay.classList.add('hidden');
             this.playSequence();
           }
@@ -501,10 +560,16 @@
       }
 
       let i = 0;
+      if (this.playbackIntervalId) clearInterval(this.playbackIntervalId);
       this.playbackIntervalId = setInterval(() => {
         if (i >= this.sequence.length) {
           clearInterval(this.playbackIntervalId);
-          setTimeout(() => this.startPlayerTurn(), 320);
+          this.playbackIntervalId = null;
+          if (this.turnStartTimeoutId) clearTimeout(this.turnStartTimeoutId);
+          this.turnStartTimeoutId = setTimeout(() => {
+            this.turnStartTimeoutId = null;
+            this.startPlayerTurn();
+          }, 320);
           return;
         }
 
@@ -514,7 +579,9 @@
         // Decoy visual pulse for Levels 16-20 (purely aesthetic atmosphere challenge)
         if (this.level >= 16 && Math.random() < 0.25) {
           this.centerHub.style.boxShadow = '0 0 45px rgba(255, 0, 127, 0.8)';
-          setTimeout(() => {
+          if (this.pulseTimeoutId) clearTimeout(this.pulseTimeoutId);
+          this.pulseTimeoutId = setTimeout(() => {
+            this.pulseTimeoutId = null;
             this.centerHub.style.boxShadow = '0 0 35px rgba(0, 0, 0, 0.95)';
           }, 120);
         }
@@ -530,9 +597,11 @@
       pad.classList.add('active');
       this.sound.playPadTone(padIndex, duration / 1000);
 
-      setTimeout(() => {
+      const tid = setTimeout(() => {
         pad.classList.remove('active');
+        this.flashTimeoutIds = this.flashTimeoutIds.filter(id => id !== tid);
       }, duration);
+      this.flashTimeoutIds.push(tid);
     }
 
     // --- Player Turn ---
@@ -668,7 +737,9 @@
       this.comboPopup.textContent = `🔥 STREAK x${streakVal}!`;
       this.comboPopup.classList.remove('hidden');
 
-      setTimeout(() => {
+      if (this.comboTimeoutId) clearTimeout(this.comboTimeoutId);
+      this.comboTimeoutId = setTimeout(() => {
+        this.comboTimeoutId = null;
         this.comboPopup.classList.add('hidden');
       }, 750);
     }
@@ -711,7 +782,9 @@
       // Append 1 new random step to sequence
       this.sequence.push(Math.floor(Math.random() * 4));
 
-      setTimeout(() => {
+      if (this.nextRoundTimeoutId) clearTimeout(this.nextRoundTimeoutId);
+      this.nextRoundTimeoutId = setTimeout(() => {
+        this.nextRoundTimeoutId = null;
         this.playSequence();
       }, 950);
     }
@@ -727,7 +800,9 @@
 
       // Glitch shake visual feedback
       this.consoleWrapper?.classList.add('glitch-shake');
-      setTimeout(() => {
+      if (this.shakeTimeoutId) clearTimeout(this.shakeTimeoutId);
+      this.shakeTimeoutId = setTimeout(() => {
+        this.shakeTimeoutId = null;
         this.consoleWrapper?.classList.remove('glitch-shake');
       }, 450);
 
@@ -739,7 +814,9 @@
       const scores = this.getHighScores();
       const bestScore = scores[this.selectedMode] || this.score;
 
-      setTimeout(() => {
+      if (this.gameOverTimeoutId) clearTimeout(this.gameOverTimeoutId);
+      this.gameOverTimeoutId = setTimeout(() => {
+        this.gameOverTimeoutId = null;
         if (this.goTitle) this.goTitle.textContent = reason;
         if (this.goSubtitle) {
           this.goSubtitle.textContent = reason === 'TIME EXPIRED'

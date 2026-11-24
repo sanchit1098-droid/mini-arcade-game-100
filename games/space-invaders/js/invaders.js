@@ -302,6 +302,12 @@
             this.screenShakeTime = 0;
             this.screenShakeIntensity = 0;
 
+            // Timeout Handles (prevent leak / race conditions on restart)
+            this.bannerTimeout = null;
+            this.bossVictoryTimeout = null;
+            this.bossWaveTimeout = null;
+            this.waveClearTimeout = null;
+
             this.lastTime = performance.now();
             this.init();
         }
@@ -491,7 +497,28 @@
             window.addEventListener('touchend', () => { this.isPointerDown = false; });
         }
 
+        clearPendingTimeouts() {
+            if (this.bannerTimeout) {
+                clearTimeout(this.bannerTimeout);
+                this.bannerTimeout = null;
+            }
+            if (this.bossVictoryTimeout) {
+                clearTimeout(this.bossVictoryTimeout);
+                this.bossVictoryTimeout = null;
+            }
+            if (this.bossWaveTimeout) {
+                clearTimeout(this.bossWaveTimeout);
+                this.bossWaveTimeout = null;
+            }
+            if (this.waveClearTimeout) {
+                clearTimeout(this.waveClearTimeout);
+                this.waveClearTimeout = null;
+            }
+            this.levelBanner?.classList.add('hidden');
+        }
+
         start() {
+            this.clearPendingTimeouts();
             this.sound.init();
             this.score = 0;
             this.wave = 1;
@@ -609,7 +636,9 @@
                 }
 
                 this.levelBanner.classList.remove('hidden');
-                setTimeout(() => {
+                if (this.bannerTimeout) clearTimeout(this.bannerTimeout);
+                this.bannerTimeout = setTimeout(() => {
+                    this.bannerTimeout = null;
                     this.levelBanner.classList.add('hidden');
                     if (this.state === 'LEVEL_TRANSITION') {
                         this.state = 'PLAYING';
@@ -860,6 +889,7 @@
         }
 
         gameOver(reason = 'MISSION FAILED') {
+            this.clearPendingTimeouts();
             this.state = 'GAMEOVER';
             this.sound.playGameOver();
 
@@ -881,6 +911,7 @@
         }
 
         triggerVictory() {
+            this.clearPendingTimeouts();
             this.state = 'VICTORY';
             this.sound.playVictory();
             this.triggerScreenShake(0.6, 16);
@@ -1120,10 +1151,18 @@
                             this.bossHealthContainer?.classList.add('hidden');
 
                             if (isFinal) {
-                                setTimeout(() => this.triggerVictory(), 1200);
+                                if (this.bossVictoryTimeout) clearTimeout(this.bossVictoryTimeout);
+                                this.bossVictoryTimeout = setTimeout(() => {
+                                    this.bossVictoryTimeout = null;
+                                    this.triggerVictory();
+                                }, 1200);
                             } else {
                                 this.sound.playWaveClear();
-                                setTimeout(() => this.setupWave(this.wave + 1), 1400);
+                                if (this.bossWaveTimeout) clearTimeout(this.bossWaveTimeout);
+                                this.bossWaveTimeout = setTimeout(() => {
+                                    this.bossWaveTimeout = null;
+                                    this.setupWave(this.wave + 1);
+                                }, 1400);
                             }
                             break;
                         }
@@ -1217,7 +1256,11 @@
                                 // Sector Cleared!
                                 if (this.aliens.length === 0) {
                                     this.sound.playWaveClear();
-                                    setTimeout(() => this.setupWave(this.wave + 1), 1000);
+                                    if (this.waveClearTimeout) clearTimeout(this.waveClearTimeout);
+                                    this.waveClearTimeout = setTimeout(() => {
+                                        this.waveClearTimeout = null;
+                                        this.setupWave(this.wave + 1);
+                                    }, 1000);
                                 }
                             } else {
                                 this.sound.playBossHit();
