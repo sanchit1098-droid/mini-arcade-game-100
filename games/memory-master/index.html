@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Memory Master | Mini Game Arcade</title>
-  <meta name="description" content="Ultimate cyber memory brain trainer! Master 4 challenging game modes, conquer 20 progressive levels, and test your recall in Classic, Timed, Hardcore, and Reverse modes.">
+  <title>Memory Master: Gem Matching | Mini Game Arcade</title>
+  <meta name="description" content="Premium Gem Matching Memory Card Game! Memorize glowing jewel locations in 5 seconds, match sparkling crystal pairs, and conquer progressive arcade levels.">
   <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
 
   <!-- Google AdSense -->
@@ -21,12 +21,12 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Orbitron:wght@600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="game-container" id="gameContainer">
     <!-- Top Floating Navigation -->
-    <div class="top-nav">
+    <header class="top-nav">
       <a href="../../index.html" class="nav-btn" title="Back to Mini Game Arcade">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -35,147 +35,121 @@
       </a>
 
       <div class="header-center">
-        <div class="game-title">MEMORY MASTER</div>
-        <div class="mode-tag-pill" id="currentModeTag">CLASSIC MODE</div>
+        <h1 class="game-title">MEMORY MASTER</h1>
+        <div class="mode-tag-pill" id="currentModeTag">GEM MATRIX</div>
       </div>
 
       <div class="nav-right">
-        <button id="btnSoundToggle" class="nav-btn icon-btn" title="Toggle Sound (M)">🔊</button>
-        <button id="btnPause" class="nav-btn icon-btn" title="Pause Game (P / Esc)">⏸</button>
+        <button id="btnSoundToggle" class="nav-btn icon-btn" title="Toggle Sound (M)" aria-label="Toggle Sound">🔊</button>
+        <button id="btnPause" class="nav-btn icon-btn" title="Pause Game (P / Esc)" aria-label="Pause Game">⏸</button>
       </div>
-    </div>
+    </header>
 
     <!-- In-Game HUD -->
-    <div class="hud" id="inGameHUD">
+    <section class="hud" id="inGameHUD">
       <div class="hud-box">
         <span class="hud-label">LEVEL</span>
-        <span class="hud-val accent-cyan" id="hudLevel">1 / 20</span>
+        <span class="hud-val accent-cyan" id="hudLevel">1</span>
       </div>
       <div class="hud-box">
         <span class="hud-label">SCORE</span>
         <span class="hud-val" id="hudScore">0</span>
       </div>
       <div class="hud-box">
-        <span class="hud-label">STREAK</span>
-        <span class="hud-val accent-gold" id="hudStreak">x1</span>
+        <span class="hud-label">MOVES</span>
+        <span class="hud-val accent-pink" id="hudMoves">0</span>
       </div>
       <div class="hud-box">
+        <span class="hud-label">PAIRS</span>
+        <span class="hud-val accent-gold" id="hudPairs">0 / 6</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">REMAINING</span>
+        <span class="hud-val accent-blue" id="hudRemaining">6</span>
+      </div>
+      <div class="hud-box">
+        <span class="hud-label">TIME</span>
+        <span class="hud-val" id="hudTime">00:00</span>
+      </div>
+      <div class="hud-box hud-best-box">
         <span class="hud-label">BEST</span>
         <span class="hud-val accent-green" id="hudBest">0</span>
       </div>
+    </section>
+
+    <!-- Discovered Pairs Progress Bar -->
+    <div class="pairs-progress-wrap" title="Pairs discovered progress">
+      <div class="pairs-progress-bar" id="pairsProgressBar" style="width: 0%;"></div>
     </div>
 
-    <!-- Active Timer Bar (for Timed Mode) -->
-    <div class="timer-bar-container hidden" id="timerBarContainer">
-      <div class="timer-bar-fill" id="timerBarFill" style="width: 100%;"></div>
-    </div>
-
-    <!-- Floating Combo Streak Badge -->
-    <div class="combo-popup hidden" id="comboPopup">🔥 STREAK x3!</div>
-
-    <!-- Simon Console Area -->
-    <div class="console-wrapper" id="consoleWrapper">
-      <div class="simon-disc" id="simonDisc">
-        <!-- 4 Glowing Quadrant Pads -->
-        <button class="pad pad-cyan" data-pad="0" id="pad0" aria-label="Cyan Pad (Key 1, Q, or Up)">
-          <div class="pad-content">
-            <span class="pad-glyph">◈</span>
-            <span class="pad-key-hint">1 / Q / ↑</span>
-          </div>
-        </button>
-
-        <button class="pad pad-pink" data-pad="1" id="pad1" aria-label="Pink Pad (Key 2, W, or Right)">
-          <div class="pad-content">
-            <span class="pad-glyph">⬡</span>
-            <span class="pad-key-hint">2 / W / →</span>
-          </div>
-        </button>
-
-        <button class="pad pad-green" data-pad="2" id="pad2" aria-label="Green Pad (Key 3, A, or Left)">
-          <div class="pad-content">
-            <span class="pad-glyph">▲</span>
-            <span class="pad-key-hint">3 / A / ←</span>
-          </div>
-        </button>
-
-        <button class="pad pad-yellow" data-pad="3" id="pad3" aria-label="Yellow Pad (Key 4, S, or Down)">
-          <div class="pad-content">
-            <span class="pad-glyph">★</span>
-            <span class="pad-key-hint">4 / S / ↓</span>
-          </div>
-        </button>
-
-        <!-- Center Hub with Circular Timer SVG & Status -->
-        <div class="center-hub" id="centerHub">
-          <svg class="hub-timer-svg" viewBox="0 0 120 120">
-            <circle class="timer-circle-bg" cx="60" cy="60" r="54" />
-            <circle class="timer-circle-progress" id="timerCircleProgress" cx="60" cy="60" r="54" />
-          </svg>
-          <div class="hub-inner-content">
-            <span class="hub-status-label" id="hubStatus">READY</span>
-            <span class="hub-sub-label" id="hubSubStatus">SELECT MODE</span>
-          </div>
+    <!-- Memorization Phase Banner -->
+    <div class="memorize-banner" id="memorizeBanner">
+      <div class="memorize-icon-wrap">
+        <span class="memorize-icon">💎</span>
+      </div>
+      <div class="memorize-info">
+        <div class="memorize-title" id="memorizeTitle">MEMORIZE THE GEMS!</div>
+        <div class="memorize-sub" id="memorizeSub">
+          Cards flip face-down in <span class="countdown-val" id="countdownVal">5.0</span>s
         </div>
       </div>
-
-      <!-- Ready Countdown Overlay (3, 2, 1, GO!) -->
-      <div class="countdown-overlay hidden" id="countdownOverlay">
-        <div class="countdown-number" id="countdownNumber">3</div>
+      <div class="memorize-timer-bar">
+        <div class="memorize-timer-fill" id="memorizeTimerFill" style="width: 100%;"></div>
       </div>
     </div>
 
-    <!-- Main Menu / Mode Select Screen -->
+    <!-- Floating Combo Streak Popup -->
+    <div class="combo-popup hidden" id="comboPopup">🔥 COMBO x2!</div>
+
+    <!-- Board Container -->
+    <main class="board-area" id="boardArea">
+      <div class="board-grid" id="boardGrid">
+        <!-- Cards generated dynamically via JavaScript -->
+      </div>
+    </main>
+
+    <!-- Main Menu / Start Screen -->
     <div class="overlay-screen" id="screenMenu">
       <div class="modal-card menu-card">
-        <div class="modal-badge">NEON CYBER MEMORY ARCADE</div>
-        <h1 class="game-title">MEMORY MASTER</h1>
-        <p class="tagline">Challenge your working memory, pattern recall, and reaction speed across 4 specialized game modes.</p>
+        <div class="modal-badge">PREMIUM ARCADE PUZZLE</div>
+        <h2 class="menu-heading">MEMORY MASTER</h2>
+        <div class="gem-subtitle">GEM MATRIX EDITION</div>
 
-        <!-- Mode Select Grid -->
-        <div class="mode-select-grid">
-          <!-- Mode 1: Classic -->
-          <div class="mode-card selected" data-mode="classic" id="modeCardClassic">
-            <div class="mode-card-header">
-              <span class="mode-icon">🕹️</span>
-              <span class="mode-name">CLASSIC</span>
-            </div>
-            <p class="mode-desc">Standard progressive sequence. Starts at 2 steps, adds 1 each round.</p>
-            <div class="mode-best">RECORD: <strong id="bestClassic">0</strong></div>
-          </div>
+        <!-- Gem Showcase Animated Banner -->
+        <div class="gem-showcase" id="gemShowcase" aria-hidden="true">
+          <!-- Animated showcase gems injected via JS -->
+        </div>
 
-          <!-- Mode 2: Timed -->
-          <div class="mode-card" data-mode="timed" id="modeCardTimed">
-            <div class="mode-card-header">
-              <span class="mode-icon">⏱️</span>
-              <span class="mode-name">TIMED</span>
-            </div>
-            <p class="mode-desc">Race against the timer! Faster completion awards huge speed bonuses.</p>
-            <div class="mode-best">RECORD: <strong id="bestTimed">0</strong></div>
-          </div>
+        <p class="tagline">
+          All gem cards are revealed for <strong>5 seconds</strong> at the start of each round. Memorize their positions, then find every matching crystal pair before the clock runs out!
+        </p>
 
-          <!-- Mode 3: Hardcore -->
-          <div class="mode-card" data-mode="hardcore" id="modeCardHardcore">
-            <div class="mode-card-header">
-              <span class="mode-icon">💀</span>
-              <span class="mode-name">HARDCORE</span>
-            </div>
-            <p class="mode-desc">Starts at 4 steps. Ultra-fast tempo, tighter timing, 2x score multiplier.</p>
-            <div class="mode-best">RECORD: <strong id="bestHardcore">0</strong></div>
-          </div>
-
-          <!-- Mode 4: Reverse -->
-          <div class="mode-card" data-mode="reverse" id="modeCardReverse">
-            <div class="mode-card-header">
-              <span class="mode-icon">🔁</span>
-              <span class="mode-name">REVERSE</span>
-            </div>
-            <p class="mode-desc">Observe the sequence forward, then recall and tap it backwards!</p>
-            <div class="mode-best">RECORD: <strong id="bestReverse">0</strong></div>
+        <!-- Difficulty Quick Select -->
+        <div class="difficulty-group">
+          <span class="difficulty-label">STARTING LEVEL:</span>
+          <div class="difficulty-chips">
+            <button class="diff-chip active" data-start-level="1">LEVEL 1 (3×4)</button>
+            <button class="diff-chip" data-start-level="3">LEVEL 3 (4×5)</button>
+            <button class="diff-chip" data-start-level="5">LEVEL 5 (5×6)</button>
           </div>
         </div>
 
-        <button class="btn btn-primary" id="btnLaunchMode">START MISSION 🚀</button>
-        <button class="btn btn-secondary" id="btnOpenHelp">HOW TO PLAY 📖</button>
+        <div class="menu-stats-row">
+          <div class="mini-stat">
+            <span class="mini-stat-lbl">ALL-TIME BEST</span>
+            <span class="mini-stat-val accent-green" id="menuBestScore">0</span>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-lbl">HIGHEST LEVEL</span>
+            <span class="mini-stat-val accent-gold" id="menuMaxLevel">1</span>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="btnStartGame">START GAME 💎</button>
+          <button class="btn btn-secondary" id="btnOpenHelp">HOW TO PLAY 📖</button>
+          <a href="../../index.html" class="btn btn-secondary">BACK TO ARCADE</a>
+        </div>
       </div>
     </div>
 
@@ -186,27 +160,27 @@
         <h2 class="modal-title">HOW TO PLAY</h2>
         <div class="help-content">
           <div class="help-row">
-            <span class="help-badge">1. WATCH</span>
-            <span>Observe the illuminated sequence of harmonic pads carefully.</span>
+            <span class="help-badge">1. MEMORIZE</span>
+            <span>At the start of every level, all gems are revealed face-up for <strong>5 seconds</strong> with an active countdown. Memorize where identical crystals lie!</span>
           </div>
           <div class="help-row">
-            <span class="help-badge">2. REPEAT</span>
-            <span>Input the sequence in the exact order requested (or reverse in Reverse Mode!).</span>
+            <span class="help-badge">2. MATCH PAIRS</span>
+            <span>Once the cards flip face-down, select two cards. If they match, they stay face-up permanently with a sparkling glow!</span>
           </div>
           <div class="help-row">
-            <span class="help-badge">3. STREAK</span>
-            <span>Maintain consecutive flawless rounds to ramp up your combo multiplier to x5!</span>
+            <span class="help-badge">3. NO PENALTY RESTART</span>
+            <span>If a pair doesn't match, they flip back face-down after 1 second. The round continues without restarting—keep hunting!</span>
           </div>
           <div class="help-row">
-            <span class="help-badge">4. LEVELS</span>
-            <span>Survive through 20 escalating difficulty levels with increasing sequence tempos.</span>
+            <span class="help-badge">4. COMBO STREAKS</span>
+            <span>Find consecutive matching pairs without a single miss to ramp up your score multiplier from <strong>x1.5 up to x3.0</strong>!</span>
           </div>
           <div class="help-row">
-            <span class="help-badge">5. CONTROLS</span>
-            <span>Mouse click, touchscreen taps, or keyboard keys <strong>1-4</strong> / <strong>Q, W, A, S</strong> / <strong>Arrow Keys</strong>.</span>
+            <span class="help-badge">5. ESCALATING BOARDS</span>
+            <span>Conquer expanding grids from 3×4 (6 pairs) up to 6×6 (18 pairs) and beyond with tighter memorization windows!</span>
           </div>
         </div>
-        <button class="btn btn-primary" id="btnCloseHelp">GOT IT, LET'S PLAY</button>
+        <button class="btn btn-primary" id="btnCloseHelp">GOT IT, LET'S PLAY 💎</button>
       </div>
     </div>
 
@@ -215,23 +189,59 @@
       <div class="modal-card">
         <div class="modal-badge">SESSION SUSPENDED</div>
         <h2 class="modal-title">GAME PAUSED</h2>
-        <p class="tagline">Neural sync temporarily halted.</p>
+        <p class="tagline">Board concealed during pause to prevent cheat-memorization.</p>
 
         <div class="pause-actions">
           <button class="btn btn-primary" id="btnResume">▶️ RESUME</button>
-          <button class="btn btn-secondary" id="btnRestart">🔄 RESTART ROUND</button>
-          <button class="btn btn-secondary" id="btnChangeMode">⚙️ CHANGE MODE</button>
+          <button class="btn btn-secondary" id="btnRestartLevel">🔄 RESTART LEVEL</button>
+          <button class="btn btn-secondary" id="btnMenuFromPause">🕹️ MAIN MENU</button>
           <a href="../../index.html" class="btn btn-secondary">🏠 BACK TO ARCADE</a>
         </div>
       </div>
     </div>
 
-    <!-- Game Over Screen -->
+    <!-- Level Complete Modal -->
+    <div class="overlay-screen hidden" id="screenLevelComplete">
+      <div class="modal-card celebration-card">
+        <div class="modal-badge celebration-badge">SECTOR SECURED ✨</div>
+        <h2 class="modal-title celebration-text" id="lvlCompTitle">LEVEL 1 CLEARED!</h2>
+        <p class="tagline" id="lvlCompSubtitle">All crystal pairs matched with supreme precision.</p>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-lbl">LEVEL SCORE</span>
+            <span class="stat-val accent-cyan" id="lvlCompScore">+0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-lbl">MOVES TAKEN</span>
+            <span class="stat-val accent-pink" id="lvlCompMoves">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-lbl">COMPLETION TIME</span>
+            <span class="stat-val accent-gold" id="lvlCompTime">00:00</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-lbl">ACCURACY RATING</span>
+            <span class="stat-val accent-green" id="lvlCompRating">⭐⭐⭐ PERFECT</span>
+          </div>
+        </div>
+
+        <div class="perfect-bonus-tag hidden" id="perfectBonusTag">
+          💎 PERFECT MEMORY BONUS: +1,000 PTS!
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="btnNextLevel">NEXT LEVEL ➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over / Final Results Screen -->
     <div class="overlay-screen hidden" id="screenGameOver">
       <div class="modal-card">
-        <div class="modal-badge alert">SEQUENCE BREACH</div>
-        <h2 class="modal-title alert-text" id="goTitle">NEURAL DESYNC</h2>
-        <p class="tagline" id="goSubtitle">Sequence mismatch detected. Neural link severed.</p>
+        <div class="modal-badge" id="goBadge">MISSION REPORT</div>
+        <h2 class="modal-title" id="goTitle">RESULTS</h2>
+        <p class="tagline" id="goSubtitle">Memory Master campaign complete!</p>
 
         <div class="stats-grid">
           <div class="stat-card">
@@ -239,15 +249,15 @@
             <span class="stat-val accent-cyan" id="goFinalScore">0</span>
           </div>
           <div class="stat-card">
-            <span class="stat-lbl">LEVEL REACHED</span>
-            <span class="stat-val accent-gold" id="goFinalLevel">1 / 20</span>
+            <span class="stat-lbl">MAX LEVEL</span>
+            <span class="stat-val accent-gold" id="goFinalLevel">1</span>
           </div>
           <div class="stat-card">
-            <span class="stat-lbl">MAX STREAK</span>
-            <span class="stat-val accent-pink" id="goFinalStreak">x1</span>
+            <span class="stat-lbl">TOTAL MOVES</span>
+            <span class="stat-val accent-pink" id="goFinalMoves">0</span>
           </div>
           <div class="stat-card">
-            <span class="stat-lbl">MODE BEST</span>
+            <span class="stat-lbl">ALL-TIME BEST</span>
             <span class="stat-val accent-green" id="goBestRecord">0</span>
           </div>
         </div>
@@ -256,7 +266,7 @@
 
         <div class="modal-actions">
           <button class="btn btn-primary" id="btnPlayAgain">PLAY AGAIN 🔄</button>
-          <button class="btn btn-secondary" id="btnGoMenu">CHANGE MODE 🕹️</button>
+          <button class="btn btn-secondary" id="btnGoMenu">MAIN MENU 🕹️</button>
           <a href="../../index.html" class="btn btn-secondary">BACK TO ARCADE</a>
         </div>
       </div>

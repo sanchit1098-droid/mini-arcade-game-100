@@ -1,56 +1,89 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" width="100%" height="100%">
   <defs>
     <linearGradient id="mmBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0c0a20"/>
-      <stop offset="100%" stop-color="#04030d"/>
+      <stop offset="0%" stop-color="#0c0824"/>
+      <stop offset="50%" stop-color="#140f36"/>
+      <stop offset="100%" stop-color="#060412"/>
     </linearGradient>
-    <filter id="padGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="8" result="blur"/>
+    <filter id="gemGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
       <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1b1542"/>
+      <stop offset="100%" stop-color="#0a081a"/>
+    </linearGradient>
   </defs>
 
   <!-- Background -->
   <rect width="600" height="380" fill="url(#mmBg)"/>
 
-  <!-- Center Circular Simon Arcade Console Console -->
-  <circle cx="300" cy="170" r="130" fill="#0b0f1d" stroke="rgba(255, 255, 255, 0.15)" stroke-width="4"/>
-  <circle cx="300" cy="170" r="138" fill="none" stroke="rgba(0, 242, 254, 0.2)" stroke-width="2"/>
+  <!-- Background Ambient Glows -->
+  <circle cx="180" cy="160" r="140" fill="#a855f7" opacity="0.12" filter="url(#gemGlow)"/>
+  <circle cx="420" cy="180" r="140" fill="#00f0ff" opacity="0.12" filter="url(#gemGlow)"/>
 
-  <!-- 4 Glowing Arcade Quadrants / Pads -->
-  <!-- Top-Left: Neon Cyan (Active glowing state) -->
-  <path d="M 292 48 A 122 122 0 0 0 178 162 L 246 162 A 54 54 0 0 1 292 116 Z" fill="#00f2fe" filter="url(#padGlow)"/>
-  <path d="M 290 52 A 118 118 0 0 0 182 160 L 244 160 A 56 56 0 0 1 290 114 Z" fill="#ffffff" opacity="0.3"/>
+  <!-- Left Card: Ruby (Flipped Face Up) -->
+  <g transform="translate(130, 75) rotate(-6)">
+    <rect width="140" height="175" rx="14" fill="#0f142e" stroke="#00ff88" stroke-width="3" filter="url(#gemGlow)"/>
+    <rect width="140" height="175" rx="14" fill="#111838" stroke="#00ff88" stroke-width="2"/>
+    <!-- Ruby Gem Inside -->
+    <g transform="translate(30, 30) scale(0.8)">
+      <polygon points="50,6 90,30 75,92 25,92 10,30" fill="#ff0055" stroke="#ff80aa" stroke-width="2.5"/>
+      <polygon points="50,6 90,30 68,40 50,22" fill="#ff3377"/>
+      <polygon points="50,6 10,30 32,40 50,22" fill="#ff6699"/>
+      <polygon points="50,22 68,40 50,78 32,40" fill="#ff0044"/>
+      <polygon points="68,40 90,30 75,92 50,78" fill="#cc0033"/>
+      <polygon points="32,40 10,30 25,92 50,78" fill="#990022"/>
+      <polygon points="45,14 55,14 62,26 38,26" fill="#ffffff" opacity="0.8"/>
+    </g>
+    <!-- Matched Sparkle -->
+    <text x="70" y="152" font-family="'Orbitron', sans-serif" font-size="11" font-weight="900" fill="#00ff88" text-anchor="middle" letter-spacing="1">MATCHED!</text>
+  </g>
 
-  <!-- Top-Right: Neon Magenta -->
-  <path d="M 308 48 A 122 122 0 0 1 422 162 L 354 162 A 54 54 0 0 0 308 116 Z" fill="#ff007f" filter="url(#padGlow)" opacity="0.85"/>
-  <path d="M 310 52 A 118 118 0 0 1 418 160 L 356 160 A 56 56 0 0 0 310 114 Z" fill="#ff007f"/>
+  <!-- Right Card: Matching Ruby (Flipped Face Up) -->
+  <g transform="translate(330, 75) rotate(6)">
+    <rect width="140" height="175" rx="14" fill="#0f142e" stroke="#00ff88" stroke-width="3" filter="url(#gemGlow)"/>
+    <rect width="140" height="175" rx="14" fill="#111838" stroke="#00ff88" stroke-width="2"/>
+    <!-- Ruby Gem Inside -->
+    <g transform="translate(30, 30) scale(0.8)">
+      <polygon points="50,6 90,30 75,92 25,92 10,30" fill="#ff0055" stroke="#ff80aa" stroke-width="2.5"/>
+      <polygon points="50,6 90,30 68,40 50,22" fill="#ff3377"/>
+      <polygon points="50,6 10,30 32,40 50,22" fill="#ff6699"/>
+      <polygon points="50,22 68,40 50,78 32,40" fill="#ff0044"/>
+      <polygon points="68,40 90,30 75,92 50,78" fill="#cc0033"/>
+      <polygon points="32,40 10,30 25,92 50,78" fill="#990022"/>
+      <polygon points="45,14 55,14 62,26 38,26" fill="#ffffff" opacity="0.8"/>
+    </g>
+    <text x="70" y="152" font-family="'Orbitron', sans-serif" font-size="11" font-weight="900" fill="#00ff88" text-anchor="middle" letter-spacing="1">MATCHED!</text>
+  </g>
 
-  <!-- Bottom-Left: Neon Lime Green -->
-  <path d="M 178 178 A 122 122 0 0 0 292 292 L 292 224 A 54 54 0 0 1 246 178 Z" fill="#00ff88" filter="url(#padGlow)" opacity="0.85"/>
-  <path d="M 182 180 A 118 118 0 0 0 290 288 L 290 226 A 56 56 0 0 1 244 180 Z" fill="#00ff88"/>
+  <!-- Center Card: Mystery Arcane Rune Card Back -->
+  <g transform="translate(240, 115)">
+    <rect width="120" height="155" rx="12" fill="url(#cardGrad)" stroke="#a855f7" stroke-width="2" filter="url(#gemGlow)"/>
+    <rect width="120" height="155" rx="12" fill="url(#cardGrad)" stroke="#a855f7" stroke-width="1.5"/>
+    <rect x="6" y="6" width="108" height="143" rx="8" fill="none" stroke="rgba(168, 85, 247, 0.4)" stroke-dasharray="4,4"/>
+    <text x="60" y="88" font-family="'Orbitron', sans-serif" font-size="36" fill="#00f0ff" text-anchor="middle" filter="url(#gemGlow)">✦</text>
+  </g>
 
-  <!-- Bottom-Right: Neon Amber / Yellow -->
-  <path d="M 422 178 A 122 122 0 0 1 308 292 L 308 224 A 54 54 0 0 0 354 178 Z" fill="#ffea00" filter="url(#padGlow)" opacity="0.85"/>
-  <path d="M 418 180 A 118 118 0 0 1 310 288 L 310 226 A 56 56 0 0 0 356 180 Z" fill="#ffea00"/>
-
-  <!-- Center Hub -->
-  <circle cx="300" cy="170" r="48" fill="#070a14" stroke="rgba(255, 255, 255, 0.2)" stroke-width="3"/>
-  <circle cx="300" cy="170" r="38" fill="#0f172a"/>
-  <!-- Center Play / Audio Symbol -->
-  <polygon points="293,155 313,170 293,185" fill="#00f2fe" filter="url(#padGlow)"/>
-
-  <!-- Sound Ripple Waves -->
-  <circle cx="300" cy="170" r="160" fill="none" stroke="#00f2fe" stroke-width="1.5" opacity="0.3"/>
-  <circle cx="300" cy="170" r="185" fill="none" stroke="#ff007f" stroke-width="1.5" opacity="0.15"/>
-
-  <!-- Floating Audio Notes / Chimes -->
-  <text x="110" y="90" font-family="'Outfit', sans-serif" font-size="28" fill="#00f2fe" filter="url(#padGlow)">♪</text>
-  <text x="470" y="85" font-family="'Outfit', sans-serif" font-size="32" fill="#ff007f" filter="url(#padGlow)">♫</text>
-  <text x="90" y="270" font-family="'Outfit', sans-serif" font-size="26" fill="#00ff88" filter="url(#padGlow)">♫</text>
-  <text x="485" y="280" font-family="'Outfit', sans-serif" font-size="30" fill="#ffea00" filter="url(#padGlow)">♪</text>
+  <!-- Floating Decorative Gem Elements -->
+  <!-- Diamond -->
+  <g transform="translate(50, 40) scale(0.48)">
+    <polygon points="26,12 74,12 94,36 50,92 6,36" fill="#80f5ff" stroke="#ffffff" stroke-width="2.5" filter="url(#gemGlow)"/>
+  </g>
+  <!-- Emerald -->
+  <g transform="translate(505, 50) scale(0.46)">
+    <polygon points="26,8 74,8 92,26 92,74 74,92 26,92 8,74 8,26" fill="#00e676" stroke="#b9f6ca" stroke-width="2.5" filter="url(#gemGlow)"/>
+  </g>
+  <!-- Citrine -->
+  <g transform="translate(60, 240) scale(0.44)">
+    <polygon points="30,8 70,8 92,30 92,70 70,92 30,92 8,70 8,30" fill="#ffd700" stroke="#fff9b3" stroke-width="2.5" filter="url(#gemGlow)"/>
+  </g>
+  <!-- Sapphire -->
+  <g transform="translate(495, 230) scale(0.44)">
+    <polygon points="50,6 94,36 78,92 22,92 6,36" fill="#0088ff" stroke="#80bfff" stroke-width="2.5" filter="url(#gemGlow)"/>
+  </g>
 
   <!-- Title Badge Overlay -->
-  <rect x="180" y="325" width="240" height="36" rx="18" fill="rgba(15, 23, 42, 0.85)" stroke="rgba(191, 85, 236, 0.4)" stroke-width="1.5"/>
-  <text x="300" y="349" font-family="'Outfit', sans-serif" font-size="16" font-weight="900" fill="#bf55ec" text-anchor="middle" letter-spacing="2">MEMORY MASTER</text>
+  <rect x="150" y="320" width="300" height="42" rx="21" fill="rgba(15, 12, 38, 0.95)" stroke="rgba(0, 240, 255, 0.5)" stroke-width="2" filter="url(#gemGlow)"/>
+  <text x="300" y="347" font-family="'Orbitron', sans-serif" font-size="16" font-weight="900" fill="#00f0ff" text-anchor="middle" letter-spacing="3">MEMORY MASTER</text>
 </svg>

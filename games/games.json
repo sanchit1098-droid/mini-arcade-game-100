@@ -170,23 +170,23 @@
   {
     "id": "memory-master",
     "title": "Memory Master",
-    "subtitle": "Cyber Sequence Simon",
+    "subtitle": "Gem Matching Memory Matrix",
     "category": "Puzzle",
     "categories": ["Puzzle", "Strategy"],
     "tags": ["Puzzle", "Strategy", "Brain", "Touch-Friendly"],
-    "keywords": ["memory", "simon", "sequence", "sound", "music", "colors", "brain", "pattern", "recall"],
-    "description": "Challenge your visual and auditory recall. Watch the four glowing neon quadrants pulse with harmonic synth chimes and repeat the sequence.",
+    "keywords": ["memory", "matching", "gems", "crystals", "cards", "puzzle", "brain", "pairs", "recall"],
+    "description": "Memorize glowing jewel locations across expanding boards in 5 seconds, match sparkling crystal pairs, and conquer progressive arcade levels.",
     "thumbnail": "assets/memory-master-thumb.svg",
     "route": "games/memory-master/index.html",
     "controls": {
-      "mouse": "Click glowing colored quadrant pads",
-      "touch": "Tap quadrant pads on touchscreen",
-      "keyboard": "1, 2, 3, 4 or Q, W, A, S or Arrow keys"
+      "mouse": "Click cards to flip and match pairs",
+      "touch": "Tap cards to reveal gems",
+      "keyboard": "P / Esc to pause, M to mute"
     },
     "features": [
-      "4 Distinct musical frequencies & neon glow ripples",
-      "Increasing sequence length & speed progression",
-      "Level tracking, best streak, and audio visualizer"
+      "24 Faceted crystal gems with vibrant vector SVG graphics",
+      "5-second initial memorization countdown with 3D card flips",
+      "Progressive grid sizes from 3x4 up to 6x8, streak combos & scoring"
     ],
     "featured": false,
     "releaseDate": "2026-11"
