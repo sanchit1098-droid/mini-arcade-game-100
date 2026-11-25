@@ -142,20 +142,20 @@ const EMBEDDED_GAMES = [
   {
     "id": "memory-master",
     "title": "Memory Master",
-    "subtitle": "Cyber Sequence Simon",
+    "subtitle": "Gem Matching Memory Matrix",
     "category": "Puzzle",
     "categories": ["Puzzle", "Strategy"],
     "tags": ["Puzzle", "Strategy", "Brain", "Touch-Friendly"],
-    "keywords": ["memory", "simon", "sequence", "sound", "music", "colors", "brain", "pattern", "recall"],
-    "description": "Challenge your visual and auditory recall. Watch the four glowing neon quadrants pulse with harmonic synth chimes and repeat the sequence.",
+    "keywords": ["memory", "matching", "gems", "crystals", "cards", "puzzle", "brain", "pairs", "recall"],
+    "description": "Memorize glowing jewel locations across expanding boards in 5 seconds, match sparkling crystal pairs, and conquer progressive arcade levels.",
     "thumbnail": "assets/memory-master-thumb.svg",
     "route": "games/memory-master/index.html",
     "controls": {
-      "mouse": "Click glowing colored quadrant pads",
-      "touch": "Tap quadrant pads on touchscreen",
-      "keyboard": "1, 2, 3, 4 or Q, W, A, S or Arrow keys"
+      "mouse": "Click cards to flip and match pairs",
+      "touch": "Tap cards to reveal gems",
+      "keyboard": "Tab / Arrows + Enter / Space to flip, P to pause, M to mute"
     },
-    "icon": "🧠",
+    "icon": "💎",
     "featured": false
   }
 ];
@@ -320,7 +320,7 @@ class ArcadePortal {
             'neon-rush': '⚡',
             'puzzle-2048': '🔢',
             'whack-a-mole': '🔨',
-            'memory-master': '🧠'
+            'memory-master': '💎'
         };
 
         this.gridEl.innerHTML = filtered.map(game => {

@@ -724,7 +724,7 @@ body {
 }
 
 .contact-card {
-    background: var(--card-bg);
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 22px 20px;
@@ -732,7 +732,7 @@ body {
     align-items: flex-start;
     gap: 16px;
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-primary);
     transition: all 0.25s ease;
 }
 

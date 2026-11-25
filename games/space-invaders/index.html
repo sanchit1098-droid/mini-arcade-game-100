@@ -10,7 +10,7 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="theme-color" content="#070919">
-    <meta name="description" content="Play the definitive arcade edition of Space Invaders on Mini Game Arcade. Battle through 10 intense levels, defeat epic boss ships, collect power-ups, and conquer the high score.">
+    <meta name="description" content="Play the definitive arcade edition of Space Invaders on Mini Game Arcade. Battle through 20+ intense levels, defeat epic boss ships, collect power-ups, and conquer the high score.">
     <title>Space Invaders | Mini Game Arcade</title>
 
     <!-- Google AdSense -->
@@ -39,7 +39,8 @@
         <!-- In-game HUD -->
         <div class="hud">
             <div class="hud-pill">SCORE: <strong id="hudScore">0</strong></div>
-            <div class="hud-pill">LEVEL: <strong id="hudWave" class="accent-gold">1 / 10</strong></div>
+            <div class="hud-pill">LEVEL: <strong id="hudWave" class="accent-gold">1 / 20</strong></div>
+            <div class="hud-pill difficulty-pill" id="hudDifficultyPill">TIER: <strong id="hudDifficulty" class="accent-green">BEGINNER</strong></div>
             <div class="hud-pill">BEST: <strong id="hudBest" class="accent-cyan">0</strong></div>
             <div class="hud-pill" id="hudLives" title="Shield Integrity / Remaining Ships">❤️❤️❤️</div>
             <button id="btnPause" class="icon-btn" title="Pause Game (P / Esc)">⏸</button>
@@ -88,9 +89,9 @@
         <!-- Start Menu Overlay -->
         <div id="screenMenu" class="overlay-screen">
             <div class="modal-card">
-                <div class="modal-badge">10-LEVEL ARCADE CAMPAIGN</div>
+                <div class="modal-badge">20-LEVEL CAMPAIGN + ENDLESS</div>
                 <h1 class="game-title">SPACE INVADERS</h1>
-                <p class="tagline">An alien armada threatens Earth. Blast through 10 escalating sectors and destroy the Galactic Mothership!</p>
+                <p class="tagline">An adaptive alien armada threatens Earth. Outsmart Hunters, Evasive Scouts, Bombers &amp; Elites across 20+ escalating sectors!</p>
 
                 <div class="instructions-box">
                     <div class="inst-row">
@@ -103,15 +104,15 @@
                     </div>
                     <div class="inst-row">
                         <span class="inst-key">📱 MOBILE TOUCH</span>
-                        <span>Drag ship on screen or tap ◀ ▶ 🔥 buttons</span>
+                        <span>Drag ship on screen (auto-fires) or tap ◀ ▶ 🔥</span>
                     </div>
                     <div class="inst-row">
-                        <span class="inst-key">🎁 POWER-UPS</span>
-                        <span>Grab Rapid Fire ⚡, Double ♊, Spread 🔱, Shield 🛡️ & Lives ❤️</span>
+                        <span class="inst-key">🧠 ADAPTIVE AI</span>
+                        <span>Hunters track you, Evasives dodge fire, Bombers rain plasma!</span>
                     </div>
                     <div class="inst-row">
                         <span class="inst-key">👾 BOSS BATTLES</span>
-                        <span>Survive Destroyer at Level 5 & Mothership Overlord at Level 10!</span>
+                        <span>Defeat mega-bosses at Levels 5, 10, 15, 20 &amp; beyond!</span>
                     </div>
                 </div>
 
@@ -162,12 +163,42 @@
             </div>
         </div>
 
-        <!-- Victory Overlay (Beating Level 10) -->
+        <!-- Level Complete Overlay -->
+        <div id="screenLevelComplete" class="overlay-screen hidden">
+            <div class="modal-card level-complete-card">
+                <div class="modal-badge" id="lcBadge">SECTOR CLEARED ✨</div>
+                <h2 id="lcTitle" class="modal-title accent-cyan">LEVEL 1 COMPLETE</h2>
+                <p class="tagline" id="lcSubtitle">Enemy squadron neutralized! Preparing hyperspace jump.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-lbl">LEVEL REWARD</span>
+                        <span class="stat-val accent-gold" id="lcBonus">+150</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">DIFFICULTY</span>
+                        <span class="stat-val accent-green" id="lcDifficulty">BEGINNER</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">TOTAL SCORE</span>
+                        <span class="stat-val accent-cyan" id="lcScore">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-lbl">NEXT SECTOR</span>
+                        <span class="stat-val" id="lcNextSector">Level 2</span>
+                    </div>
+                </div>
+
+                <button id="btnNextWave" class="btn btn-primary">NEXT LEVEL ➡️</button>
+            </div>
+        </div>
+
+        <!-- Victory Overlay (Beating Level 20) -->
         <div id="screenVictory" class="overlay-screen hidden">
             <div class="modal-card victory-card">
-                <div class="modal-badge victory">CAMPAIGN COMPLETE</div>
+                <div class="modal-badge victory">20-LEVEL CAMPAIGN COMPLETE</div>
                 <h2 class="modal-title victory-text">GALAXY SAVED! 🏆</h2>
-                <p class="tagline">The Mothership Overlord has exploded into cosmic dust. You are the ultimate Ace Pilot!</p>
+                <p class="tagline">The Galactic Emperor has exploded into cosmic dust. Continue into Endless Overdrive or restart your mission!</p>
 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -179,7 +210,7 @@
                         <span class="stat-val accent-green" id="vicLives">3</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-lbl">ALL 10 SECTORS</span>
+                        <span class="stat-lbl">ALL 20 SECTORS</span>
                         <span class="stat-val accent-cyan">CLEARED 100%</span>
                     </div>
                     <div class="stat-card">
@@ -188,7 +219,8 @@
                     </div>
                 </div>
 
-                <button id="btnVicPlayAgain" class="btn btn-primary">PLAY AGAIN 🛸</button>
+                <button id="btnContinueEndless" class="btn btn-primary">ENDLESS OVERDRIVE (LVL 21+) 🚀</button>
+                <button id="btnVicPlayAgain" class="btn btn-secondary">PLAY AGAIN 🛸</button>
                 <a href="../../index.html" class="btn btn-secondary">RETURN TO ARCADE</a>
             </div>
         </div>

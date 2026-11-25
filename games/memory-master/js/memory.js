@@ -395,14 +395,14 @@
   const LEVELS = [
     { level: 1, rows: 3, cols: 4, pairs: 6, previewSec: 5.0, targetMoves: 9, targetSec: 25 },
     { level: 2, rows: 4, cols: 4, pairs: 8, previewSec: 5.0, targetMoves: 13, targetSec: 35 },
-    { level: 3, rows: 4, cols: 5, pairs: 10, previewSec: 4.5, targetMoves: 16, targetSec: 45 },
-    { level: 4, rows: 5, cols: 4, pairs: 10, previewSec: 4.5, targetMoves: 16, targetSec: 45 },
+    { level: 3, rows: 4, cols: 5, pairs: 10, previewSec: 5.0, targetMoves: 16, targetSec: 45 },
+    { level: 4, rows: 5, cols: 4, pairs: 10, previewSec: 4.0, targetMoves: 16, targetSec: 45 },
     { level: 5, rows: 5, cols: 6, pairs: 15, previewSec: 4.0, targetMoves: 25, targetSec: 65 },
-    { level: 6, rows: 6, cols: 6, pairs: 18, previewSec: 3.5, targetMoves: 30, targetSec: 80 },
-    { level: 7, rows: 6, cols: 6, pairs: 18, previewSec: 3.0, targetMoves: 28, targetSec: 75 },
-    { level: 8, rows: 6, cols: 7, pairs: 21, previewSec: 3.5, targetMoves: 34, targetSec: 90 },
-    { level: 9, rows: 6, cols: 8, pairs: 24, previewSec: 3.5, targetMoves: 38, targetSec: 100 },
-    { level: 10, rows: 6, cols: 8, pairs: 24, previewSec: 3.0, targetMoves: 36, targetSec: 95 }
+    { level: 6, rows: 6, cols: 6, pairs: 18, previewSec: 3.8, targetMoves: 30, targetSec: 80 },
+    { level: 7, rows: 6, cols: 7, pairs: 21, previewSec: 3.6, targetMoves: 34, targetSec: 90 },
+    { level: 8, rows: 6, cols: 8, pairs: 24, previewSec: 3.4, targetMoves: 38, targetSec: 100 },
+    { level: 9, rows: 6, cols: 8, pairs: 24, previewSec: 3.2, targetMoves: 36, targetSec: 95 },
+    { level: 10, rows: 6, cols: 8, pairs: 24, previewSec: 3.0, targetMoves: 34, targetSec: 90 }
   ];
 
   // ========================================================
@@ -646,8 +646,10 @@
       this.totalMovesSession = 0;
       this.pairsFound = 0;
       this.totalPairs = 6;
-      this.streak = 1;
-      this.maxStreak = 1;
+      this.streak = 0;
+      this.maxStreak = 0;
+      this.currentRows = 3;
+      this.currentCols = 4;
 
       // Card Selection
       this.cardsData = [];
@@ -660,6 +662,13 @@
       this.mismatchTimeoutId = null;
       this.elapsedTimerId = null;
       this.comboTimeoutId = null;
+      this.levelCompleteTimeoutId = null;
+      this.levelCompleteRemainingMs = 0;
+      this.levelCompleteStartTime = 0;
+      this.mismatchDurationMs = 1000;
+      this.mismatchRemainingMs = 0;
+      this.mismatchStartTime = 0;
+      this.mismatchCards = null;
       this.previewRemainingMs = 5000;
       this.previewTotalMs = 5000;
       this.elapsedSeconds = 0;
@@ -720,6 +729,15 @@
         clearTimeout(this.comboTimeoutId);
         this.comboTimeoutId = null;
       }
+      if (this.levelCompleteTimeoutId) {
+        clearTimeout(this.levelCompleteTimeoutId);
+        this.levelCompleteTimeoutId = null;
+      }
+      this.levelCompleteRemainingMs = 0;
+      this.levelCompleteStartTime = 0;
+      this.mismatchRemainingMs = 0;
+      this.mismatchStartTime = 0;
+      this.mismatchCards = null;
       this.comboPopup?.classList.add('hidden');
     }
 
@@ -804,11 +822,14 @@
           this.updateSoundButtonUI();
         }
       });
+
+      window.addEventListener('resize', () => this.fitBoardToViewport());
     }
 
     openMainMenu() {
       this.clearAllTimers();
       this.state = 'MENU';
+      this.boardArea?.classList.remove('hidden');
 
       this.screenPause?.classList.add('hidden');
       this.screenLevelComplete?.classList.add('hidden');
@@ -824,9 +845,27 @@
         this.pausedPreviousState = this.state;
         this.state = 'PAUSED';
 
-        // Pause timers
-        if (this.memorizeTimerId) clearInterval(this.memorizeTimerId);
-        if (this.elapsedTimerId) clearInterval(this.elapsedTimerId);
+        // Pause active timers cleanly
+        if (this.memorizeTimerId) {
+          clearInterval(this.memorizeTimerId);
+          this.memorizeTimerId = null;
+        }
+        if (this.elapsedTimerId) {
+          clearInterval(this.elapsedTimerId);
+          this.elapsedTimerId = null;
+        }
+        if (this.mismatchTimeoutId) {
+          clearTimeout(this.mismatchTimeoutId);
+          this.mismatchTimeoutId = null;
+          const elapsedMismatch = Date.now() - this.mismatchStartTime;
+          this.mismatchRemainingMs = Math.max(50, this.mismatchRemainingMs - elapsedMismatch);
+        }
+        if (this.levelCompleteTimeoutId) {
+          clearTimeout(this.levelCompleteTimeoutId);
+          this.levelCompleteTimeoutId = null;
+          const elapsedComplete = Date.now() - this.levelCompleteStartTime;
+          this.levelCompleteRemainingMs = Math.max(50, this.levelCompleteRemainingMs - elapsedComplete);
+        }
 
         // Conceal board to prevent cheat memorization
         this.boardArea?.classList.add('hidden');
@@ -835,11 +874,17 @@
         this.state = this.pausedPreviousState || 'PLAYING';
         this.screenPause?.classList.add('hidden');
         this.boardArea?.classList.remove('hidden');
+        this.fitBoardToViewport();
 
         if (this.state === 'MEMORIZING') {
           this.resumeMemorizeTimer();
         } else if (this.state === 'PLAYING') {
           this.resumeElapsedTimer();
+          if (this.isChecking && this.mismatchCards && this.mismatchRemainingMs > 0) {
+            this.scheduleMismatchFlipBack(this.mismatchRemainingMs);
+          } else if (this.pairsFound >= this.totalPairs && this.levelCompleteRemainingMs > 0) {
+            this.scheduleLevelComplete(this.levelCompleteRemainingMs);
+          }
         }
       }
     }
@@ -877,9 +922,14 @@
       this.moves = 0;
       this.pairsFound = 0;
       this.totalPairs = cfg.pairs;
-      this.streak = 1;
+      this.streak = 0;
       this.levelScore = 0;
       this.elapsedSeconds = 0;
+      this.currentRows = cfg.rows;
+      this.currentCols = cfg.cols;
+
+      // Ensure board area is visible on level start/restart
+      this.boardArea?.classList.remove('hidden');
 
       // Update HUD
       if (this.hudLevel) this.hudLevel.textContent = `${cfg.level}`;
@@ -897,13 +947,33 @@
       this.startMemorizationPhase(cfg.previewSec);
     }
 
+    fitBoardToViewport() {
+      if (!this.boardGrid || !this.boardArea) return;
+      const cols = this.currentCols || 4;
+      const rows = this.currentRows || 3;
+      const gap = window.innerWidth <= 640 ? 6 : 8;
+      const areaWidth = this.boardArea.clientWidth || Math.min(900, window.innerWidth - 28);
+      const areaHeight = this.boardArea.clientHeight || Math.max(240, window.innerHeight - 230);
+
+      // Card aspect-ratio is 1 / 1.15 -> cardH = cardW * 1.15
+      const maxCardWFromWidth = (areaWidth - (cols - 1) * gap) / cols;
+      const maxCardHFromHeight = (areaHeight - (rows - 1) * gap) / rows;
+      const maxCardWFromHeight = maxCardHFromHeight / 1.15;
+
+      const cardW = Math.max(28, Math.min(105, maxCardWFromWidth, maxCardWFromHeight));
+      const gridMaxWidth = Math.floor(cols * cardW + (cols - 1) * gap);
+      this.boardGrid.style.maxWidth = `${gridMaxWidth}px`;
+      this.boardGrid.style.gap = `${gap}px`;
+    }
+
     buildBoard(cfg) {
       if (!this.boardGrid) return;
       this.boardGrid.innerHTML = '';
 
       // Set CSS Grid layout dynamically
       this.boardGrid.style.gridTemplateColumns = `repeat(${cfg.cols}, minmax(0, 1fr))`;
-      this.boardGrid.style.maxWidth = `${Math.min(720, cfg.cols * 105)}px`;
+      this.fitBoardToViewport();
+      requestAnimationFrame(() => this.fitBoardToViewport());
 
       // Select cfg.pairs unique gems
       const shuffledGemsPool = [...GEMS].sort(() => Math.random() - 0.5);
@@ -931,7 +1001,9 @@
         cardEl.setAttribute('data-index', index.toString());
         cardEl.setAttribute('data-gem-id', item.id);
         cardEl.setAttribute('role', 'button');
-        cardEl.setAttribute('aria-label', `Card ${index + 1}: ${item.name}`);
+        cardEl.setAttribute('tabindex', '0');
+        cardEl.setAttribute('aria-pressed', 'true');
+        cardEl.setAttribute('aria-label', `Card ${index + 1}`);
 
         cardEl.innerHTML = `
           <div class="card-inner">
@@ -946,10 +1018,33 @@
           </div>
         `;
 
-        // Card interaction listener
+        // Mouse/Touch and Keyboard interaction listeners
         cardEl.addEventListener('click', () => this.handleCardClick(cardEl, index));
+        cardEl.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            this.handleCardClick(cardEl, index);
+          } else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+            e.preventDefault();
+            this.moveCardFocus(index, e.key);
+          }
+        });
         this.boardGrid.appendChild(cardEl);
       });
+    }
+
+    moveCardFocus(currentIndex, key) {
+      if (!this.boardGrid) return;
+      const total = this.cardsData.length;
+      const cols = this.currentCols || 4;
+      let nextIndex = currentIndex;
+      if (key === 'ArrowRight') nextIndex = (currentIndex + 1) % total;
+      else if (key === 'ArrowLeft') nextIndex = (currentIndex - 1 + total) % total;
+      else if (key === 'ArrowDown') nextIndex = currentIndex + cols < total ? currentIndex + cols : currentIndex;
+      else if (key === 'ArrowUp') nextIndex = currentIndex - cols >= 0 ? currentIndex - cols : currentIndex;
+
+      const nextCard = this.boardGrid.querySelector(`.card[data-index="${nextIndex}"]`);
+      if (nextCard) nextCard.focus();
     }
 
     // ========================================================
@@ -1019,6 +1114,7 @@
       cardEls.forEach(card => {
         card.classList.remove('previewing');
         card.classList.remove('is-flipped');
+        card.setAttribute('aria-pressed', 'false');
       });
 
       // Update banner to active playing status
@@ -1062,6 +1158,7 @@
       if (!this.firstCard) {
         this.firstCard = { el: cardEl, index: index, data: this.cardsData[index] };
         cardEl.classList.add('is-flipped');
+        cardEl.setAttribute('aria-pressed', 'true');
         this.sound.playCardFlip();
         return;
       }
@@ -1071,6 +1168,7 @@
 
       this.secondCard = { el: cardEl, index: index, data: this.cardsData[index] };
       cardEl.classList.add('is-flipped');
+      cardEl.setAttribute('aria-pressed', 'true');
       this.sound.playCardFlip();
 
       // Increment moves counter
@@ -1100,24 +1198,24 @@
       // Keep cards face-up permanently with glowing success aura
       card1.el.classList.add('matched');
       card2.el.classList.add('matched');
+      card1.el.setAttribute('aria-pressed', 'true');
+      card2.el.setAttribute('aria-pressed', 'true');
 
       this.pairsFound++;
       const remaining = Math.max(0, this.totalPairs - this.pairsFound);
 
-      // Scoring: Base match points + Streak bonus
+      // Update consecutive match streak cleanly (1st match = 1x, 2nd consecutive = x2 / 1.5x pts, etc.)
+      this.streak++;
+      if (this.streak > this.maxStreak) this.maxStreak = this.streak;
+
       let points = 100;
       if (this.streak >= 2) {
-        points = Math.round(points * (1 + (this.streak - 1) * 0.5));
+        const multiplier = Math.min(3.0, 1 + (this.streak - 1) * 0.5);
+        points = Math.round(points * multiplier);
+        this.triggerComboPopup(this.streak);
       }
       this.score += points;
       this.levelScore += points;
-
-      // Update streak
-      this.streak++;
-      if (this.streak > this.maxStreak) this.maxStreak = this.streak;
-      if (this.streak >= 2) {
-        this.triggerComboPopup(this.streak);
-      }
 
       // Update HUD & Progress Bar
       if (this.hudScore) this.hudScore.textContent = this.score;
@@ -1139,10 +1237,23 @@
       this.secondCard = null;
       this.isChecking = false;
 
-      // Check Level Clear Condition
+      // Check Level Clear Condition (tracked so restarts/pauses can cancel safely)
       if (this.pairsFound >= this.totalPairs) {
-        setTimeout(() => this.handleLevelComplete(), 450);
+        this.scheduleLevelComplete(450);
       }
+    }
+
+    scheduleLevelComplete(delayMs) {
+      if (this.levelCompleteTimeoutId) clearTimeout(this.levelCompleteTimeoutId);
+      this.levelCompleteStartTime = Date.now();
+      this.levelCompleteRemainingMs = delayMs;
+      this.levelCompleteTimeoutId = setTimeout(() => {
+        this.levelCompleteTimeoutId = null;
+        this.levelCompleteRemainingMs = 0;
+        if (this.state === 'PLAYING') {
+          this.handleLevelComplete();
+        }
+      }, delayMs);
     }
 
     handleMismatch() {
@@ -1155,28 +1266,41 @@
       card1.el.classList.add('mismatch');
       card2.el.classList.add('mismatch');
 
-      // Reset streak
-      this.streak = 1;
+      // Reset streak on mismatch
+      this.streak = 0;
 
-      // IMPORTANT: After ~1 second, flip both cards back face-down.
-      // Do NOT restart the game. Player continues seamlessly!
+      // Store mismatch state so pause/resume works seamlessly
+      this.mismatchCards = { card1, card2 };
+      this.mismatchRemainingMs = this.mismatchDurationMs;
+      this.scheduleMismatchFlipBack(this.mismatchRemainingMs);
+    }
+
+    scheduleMismatchFlipBack(delayMs) {
+      if (!this.mismatchCards) return;
       if (this.mismatchTimeoutId) clearTimeout(this.mismatchTimeoutId);
+      this.mismatchStartTime = Date.now();
+      this.mismatchRemainingMs = delayMs;
+
       this.mismatchTimeoutId = setTimeout(() => {
         this.mismatchTimeoutId = null;
+        if (this.state !== 'PLAYING' || !this.mismatchCards) return;
 
-        card1.el.classList.remove('mismatch');
-        card2.el.classList.remove('mismatch');
-        card1.el.classList.remove('is-flipped');
-        card2.el.classList.remove('is-flipped');
+        const { card1, card2 } = this.mismatchCards;
+        card1.el.classList.remove('mismatch', 'is-flipped');
+        card2.el.classList.remove('mismatch', 'is-flipped');
+        card1.el.setAttribute('aria-pressed', 'false');
+        card2.el.setAttribute('aria-pressed', 'false');
 
+        this.mismatchCards = null;
+        this.mismatchRemainingMs = 0;
         this.firstCard = null;
         this.secondCard = null;
         this.isChecking = false;
-      }, 1000);
+      }, delayMs);
     }
 
     triggerComboPopup(streakVal) {
-      if (!this.comboPopup) return;
+      if (!this.comboPopup || streakVal < 2) return;
       this.comboPopup.textContent = `💎 COMBO x${streakVal}!`;
       this.comboPopup.classList.remove('hidden');
 

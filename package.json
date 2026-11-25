@@ -5,8 +5,9 @@
   "scripts": {
     "build": "node scripts/build.js",
     "audit": "node scripts/build.js",
-    "dev": "python -m http.server 8080",
-    "start": "python -m http.server 8080",
+    "dev": "node server.js",
+    "start": "node server.js",
+    "lint": "node --check server.js && node scripts/build.js",
     "test": "node scripts/build.js"
   },
   "keywords": [
@@ -26,6 +27,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@vercel/analytics": "^2.0.1"
+    "express": "^5.3.0"
   }
 }

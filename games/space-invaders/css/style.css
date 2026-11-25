@@ -568,6 +568,13 @@ html, body {
 .accent-cyan { color: var(--primary-cyan); }
 .accent-gold { color: var(--primary-yellow); }
 .accent-green { color: var(--primary-green); }
+.accent-orange { color: #ff8800; }
+.accent-purple { color: #c084fc; }
+
+.level-complete-card {
+    border-color: var(--primary-green);
+    box-shadow: 0 12px 50px rgba(0, 0, 0, 0.85), 0 0 36px rgba(0, 255, 136, 0.28);
+}
 
 .btn {
     display: block;
@@ -613,7 +620,10 @@ html, body {
     }
     .hud-pill {
         padding: 4px 8px;
-        font-size: 0.72rem;
+        font-size: 0.68rem;
+    }
+    .difficulty-pill {
+        display: none;
     }
     .game-title {
         font-size: 1.7rem;
@@ -623,5 +633,21 @@ html, body {
     }
     .banner-title {
         font-size: 1.7rem;
+    }
+}
+
+@media (max-height: 500px) {
+    .touch-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 1.2rem;
+    }
+    .touch-fire-btn {
+        width: 64px;
+        height: 64px;
+        font-size: 1.4rem;
+    }
+    .mobile-space-controls {
+        bottom: 8px;
     }
 }
